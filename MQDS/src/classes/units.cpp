@@ -20,7 +20,8 @@ std::string const Units::hertz="hz";
 
 std::map<std::pair<std::string, std::string>, double>
 const Units::conversion_map = {
-        {std::make_pair(Units::wavenumber, Units::atomic_energy), 1.0}
+        {std::make_pair(Units::wavenumber, Units::atomic_energy), 1.0},
+        {std::make_pair(Units::wavenumber, Units::atomic_angular_frequency), 1.0}
 };
 
 double Units::conversion(std::string const &from_units,std::string const &to_units)
