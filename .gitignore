@@ -1,0 +1,28 @@
+
+#-- General files --#
+.DS_Store
+*~
+
+#-- IDE files --#
+.idea*
+
+#-- Compiled files --#
+*.mod
+*.o
+*.exe
+build/
+cmake-build-debug/
+
+#-- Python files --#
+*.pyc
+__pycache__/
+*cpython*
+
+#-- Output files --#
+*linrespfunc.out
+pldm.*
+twa.*
+sqc.*
+ipldm.*
+*.log
+*.out
