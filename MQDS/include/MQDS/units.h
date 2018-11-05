@@ -19,7 +19,7 @@ namespace Units
     extern std::string const hertz;
 
     // Map that takes input strings and returns float unit conversion factor
-    extern std::map<std::pair<std::string, std::string >, double> const conversion_map;
+    //extern std::map<std::pair<std::string, std::string >, double> const conversion_map;
 };
 
 #endif //MQDS_UNITS_H

@@ -10,7 +10,7 @@ int main()
     // Figure out who I am and provide pseudo-random number generator
     // with a processor-dependent seed
     Universe process;
-    Random::set_local_seed(process.mype);
+    Random::set_local_seed(process.get_my_pe());
     std::cout.precision( 17 );
 
     //std::cout << Units::conversion(
@@ -18,9 +18,12 @@ int main()
 
     //std::cout << process.mype << "    " << Random::uniform_random_number(0.0,1.0) << std::endl;
 
-    {
-        std::cout << Units::conversion(Units::wavenumber,Units::atomic_energy) << std::endl;
-    }
+    if (process.is_master())
+        std::cout << process.get_my_pe() << std::endl;
+
+//    {
+//        std::cout << Units::conversion(Units::wavenumber,Units::atomic_energy) << std::endl;
+//    }
     return 0;
 
 }

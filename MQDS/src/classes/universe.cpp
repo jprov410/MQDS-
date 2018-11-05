@@ -9,8 +9,10 @@
 Universe::Universe()
 {
     MPI_Init(nullptr, nullptr);
-    numprocs = get_num_procs();
-    mype = get_my_pe();
+    MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
+    MPI_Comm_rank(MPI_COMM_WORLD, &mype);
+    //numprocs = get_num_procs();
+    //mype = get_my_pe();
 }
 
 // Destructor finalizes MPI
@@ -21,18 +23,18 @@ Universe::~Universe()
 }
 
 // Figure out how many processors are being used
-int Universe::get_num_procs()
+int const Universe::get_num_procs()
 {
-    int m_numprocs;
-    MPI_Comm_size(MPI_COMM_WORLD, &m_numprocs);
-    return m_numprocs;
+    return numprocs;
 }
 
 // Figure out which processing element I am
-int Universe::get_my_pe()
+int const Universe::get_my_pe()
 {
-    int m_mype;
-    MPI_Comm_rank(MPI_COMM_WORLD, &m_mype);
-    return m_mype;
+    return mype;
 }
 
+bool const Universe::is_master()
+{
+    return (mype == masterpe);
+}

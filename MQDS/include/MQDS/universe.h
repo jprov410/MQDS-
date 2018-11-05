@@ -11,12 +11,13 @@ class Universe
 public:
     Universe();
     ~Universe();
+    int const get_num_procs();
+    int const get_my_pe();
+    bool const is_master();
+private:
     int numprocs;
     int mype;
-    int masterpe = 0;
-private:
-    int get_num_procs();
-    int get_my_pe();
+    int const masterpe = 0;
 protected:
 };
 

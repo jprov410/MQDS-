@@ -18,23 +18,17 @@ std::string const Units::wavenumber="wvnbr";
 std::string const Units::seconds="s";
 std::string const Units::hertz="hz";
 
-std::map<std::pair<std::string, std::string>, double>
-const Units::conversion_map = {
-        {std::make_pair(Units::wavenumber, Units::atomic_energy), 1.0},
-        {std::make_pair(Units::wavenumber, Units::atomic_angular_frequency), 1.0}
-};
+namespace {
+    std::map<std::pair<std::string, std::string>, double>
+    const conversion_map = {
+            {std::make_pair(Units::wavenumber, Units::atomic_energy),            1.0},
+            {std::make_pair(Units::wavenumber, Units::atomic_angular_frequency), 1.0}
+    };
+}
 
 double Units::conversion(std::string const &from_units,std::string const &to_units)
 {
-    //std::map<std::pair<std::string, std::string>, double> conversion_map;
-    //conversion_map[std::make_pair
-    //    //        (Units::wavenumber,Units::atomic_energy)] = 1.0;
-    //conversion_map[std::make_pair
-    //        (Units::wavenumber,Units::atomic_angular_frequency)] = 2.0;
-
-
-    return Units::conversion_map.at( std::make_pair(from_units,to_units) );
-    return 0.;
+    return conversion_map.at( std::make_pair(from_units,to_units) );
 }
 
 
