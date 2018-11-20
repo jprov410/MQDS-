@@ -5,20 +5,26 @@
 #ifndef MQDS_UNIVERSE_H
 #define MQDS_UNIVERSE_H
 
+namespace MQDS
+{
+    class Universe;
+}
 
-class Universe
+class MQDS::Universe
 {
 public:
     Universe();
     ~Universe();
-    int const get_num_procs();
-    int const get_my_pe();
+    int const num_procs();
+    int const my_pe();
     bool const is_master();
+    void broadcast();
 private:
-    int numprocs;
-    int mype;
-    int const masterpe = 0;
+    int num_procs_;
+    int my_pe_;
+    int const master_pe_ = 0;
 protected:
+
 };
 
 

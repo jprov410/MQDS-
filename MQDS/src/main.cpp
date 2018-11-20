@@ -4,27 +4,25 @@
 #include "../include/MQDS/units.h"
 #include "../include/MQDS/random.h"
 #include "../include/MQDS/constants.h"
+#include "../include/MQDS/output.h"
 
+using namespace MQDS;
 int main()
 {
     // Figure out who I am and provide pseudo-random number generator
     // with a processor-dependent seed
-    Universe process;
-    Random::set_local_seed(process.get_my_pe());
+    Universe my_proc;
+    Random::set_local_seed(my_proc.my_pe());
+
+    // Gather input information
+    Input in;
+
+    if (my_proc.is_master()) Output::write_run_parameters();
+
+    // Set precision for output
     std::cout.precision( 17 );
 
-    //std::cout << Units::conversion(
-//            Units::wavenumber, Units::atomic_energy ) << std::endl;
+    //std::cout << in.temperature() << std::endl;
 
-    //std::cout << process.mype << "    " << Random::uniform_random_number(0.0,1.0) << std::endl;
-
-    if (process.is_master())
-        std::cout << process.get_my_pe() << std::endl;
-
-//    {
-//        std::cout << Units::conversion(Units::wavenumber,Units::atomic_energy) << std::endl;
-//    }
     return 0;
-
 }
-

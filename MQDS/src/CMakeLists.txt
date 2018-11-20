@@ -3,7 +3,8 @@ add_subdirectory(classes)
 
 #directories that contain source code
 include_directories(${MQDS_SOURCE_DIR}/MQDS/src/classes)
-include_directories(${MQDS_SOURCE_DIR}/MQDS/src/classes)
+#headers
+include_directories(${MQDS_SOURCE_DIR}/MQDS/include)
 
 #directories that conatin compiled libraries
 include_directories(${MQDS_BINARY_DIR}/MQDS/src/classes)

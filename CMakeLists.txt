@@ -3,7 +3,7 @@ project(MQDS
         LANGUAGES CXX
         )
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER mpicxx)
 
 find_package(LAPACK)

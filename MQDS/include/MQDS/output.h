@@ -6,7 +6,9 @@
 #define MQDS_OUTPUT_H
 
 
-class output {
+namespace MQDS::Output
+{
+    void const write_run_parameters();
 
 };
 

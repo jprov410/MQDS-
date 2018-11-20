@@ -5,36 +5,42 @@
 #include "../../include/MQDS/universe.h"
 #include <mpi.h>
 
+
 // Constructor initializes MPI and determines how many processors and who I am
-Universe::Universe()
+MQDS::Universe::Universe()
 {
     MPI_Init(nullptr, nullptr);
-    MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
-    MPI_Comm_rank(MPI_COMM_WORLD, &mype);
-    //numprocs = get_num_procs();
-    //mype = get_my_pe();
+    MPI_Comm_size(MPI_COMM_WORLD, &num_procs_);
+    MPI_Comm_rank(MPI_COMM_WORLD, &my_pe_);
 }
 
 // Destructor finalizes MPI
-Universe::~Universe()
+MQDS::Universe::~Universe()
 {
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
 }
 
 // Figure out how many processors are being used
-int const Universe::get_num_procs()
+int const MQDS::Universe::num_procs()
 {
-    return numprocs;
+    return num_procs_;
 }
 
 // Figure out which processing element I am
-int const Universe::get_my_pe()
+int const MQDS::Universe::my_pe()
 {
-    return mype;
+    return my_pe_;
 }
 
-bool const Universe::is_master()
+bool const MQDS::Universe::is_master()
 {
-    return (mype == masterpe);
+    return (my_pe_ == master_pe_);
+}
+
+void MQDS::Universe::broadcast()
+{
+    //TODO need to figure out how to broadcast arbitrary data type
+    MPI_Barrier(MPI_COMM_WORLD);
+    //MPI_Bcast();
 }
