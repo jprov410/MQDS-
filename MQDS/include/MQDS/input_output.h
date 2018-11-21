@@ -8,14 +8,19 @@
 #include <string>
 namespace MQDS
 {
-    class Input;
+    class IO;
 }
 
-class MQDS::Input
+class MQDS::IO
 {
 public:
-    Input();
-    //TODO make a function that outputs run parameter values
+    IO();
+    void const write_run_parameters();
+
+    std::string const & method() const {return method_;};
+    std::string const & calculation() const {return calculation_;};
+    std::string const & window_shape() const {return window_shape_;};
+    std::string const & system_basis() const {return system_basis_;};
 
     int const & ntraj() const {return ntraj_;};
     int const & nstate() const {return nstate_;};
@@ -25,17 +30,15 @@ public:
     int const & initstate() const {return initstate_;};
     int const & initstatet() const {return initstatet_;};
 
-    std::string const & method() const {return method_;};
-    std::string const & calculation() const {return calculation_;};
-    std::string const & window_shape() const {return window_shape_;};
-    std::string const & system_basis() const {return system_basis_;};
-
     double const & temperature() const {return temperature_;};
+    double const & zero_point_energy() const {return zero_point_energy_;};
 
 private:
     // FUNCTIONS
     void const read_runfile();
     void const set_defaults();
+
+
     void const assign_value(std::string const &key,
                             std::vector<std::string> const &tokens);
 
@@ -51,6 +54,7 @@ private:
 
     // DOUBLES
     double temperature_;
+    double zero_point_energy_;
 
 protected:
 };

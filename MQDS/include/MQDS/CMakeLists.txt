@@ -1,7 +1,6 @@
 set(MQDS_HEADER_FILES
         universe.h
-        input.h
-        output.h
+        input_output.h
         system.h
         bath.h
         units.h

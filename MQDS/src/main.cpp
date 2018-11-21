@@ -1,10 +1,10 @@
 #include <iostream>
 #include "../include/MQDS/universe.h"
-#include "../include/MQDS/input.h"
+#include "MQDS/input_output.h"
 #include "../include/MQDS/units.h"
 #include "../include/MQDS/random.h"
 #include "../include/MQDS/constants.h"
-#include "../include/MQDS/output.h"
+
 
 using namespace MQDS;
 int main()
@@ -15,9 +15,9 @@ int main()
     Random::set_local_seed(my_proc.my_pe());
 
     // Gather input information
-    Input in;
+    IO io;
 
-    if (my_proc.is_master()) Output::write_run_parameters();
+    if (my_proc.is_master()) io.write_run_parameters();
 
     // Set precision for output
     std::cout.precision( 17 );

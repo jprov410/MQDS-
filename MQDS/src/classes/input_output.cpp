@@ -2,23 +2,33 @@
 // Created by Justin Provazza on 10/9/18.
 //
 
-#include "../../include/MQDS/input.h"
+#include "../../include/MQDS/input_output.h"
 #include "../../include/MQDS/units.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+#include <ctime>
 
 namespace
 {
+    // Input files
     std::ifstream runfile("run.in"); // input file with run parameters
 
-    //TODO add more input file definitions
+    // Output files
+    std::ofstream runlog("run_info.log");
 
     std::string const comment_delim="//"; // delimiter to separate comments
     std::string const token_delim=" "; // delimiter to separate tokens
+    std::string const eq_sign="="; // delimiter to separate tokens
+    std::string const line_delim =
+            "-------------------------------------------------";
+    // Current time
+    auto time_now =
+            std::chrono::system_clock::to_time_t
+                    (std::chrono::system_clock::now());
 
-    // to deal with input files
+    // Structure to deal with input files
     struct RunLine
     {
         std::string raw;
@@ -40,18 +50,22 @@ namespace
             while ((next = uncommented.find(token_delim,last))
                    != std::string::npos)
             {
-            my_tokens.push_back(uncommented.substr(last, next - last));
+                if (uncommented.substr(last, next - last) != eq_sign)
+                {
+                    my_tokens.push_back(
+                            uncommented.substr(last, next - last));
+                }
                 last = next + 1;
             }
             my_tokens.push_back(uncommented.substr(last));
         };
         // Check if one of the tokens is an element of keyword vector
-        bool const contains_keyword( std::vector<std::string>const &keywords )
+        bool const contains_keyword(std::vector<std::string>const &keywords)
         {
             filter_comments();
             find_tokens();
 
-            for ( auto &j : keywords )
+            for (auto &j : keywords)
             {
                 if (my_tokens[0] == j){
                     my_keyword = my_tokens[0];
@@ -60,9 +74,6 @@ namespace
             }
             return false;
         };
-
-
-        //TODO need to figure out how to look for subsequent tokens to see if they can be expected type
     };
 
     std::string const assign_string( std::string const &val )
@@ -80,15 +91,42 @@ namespace
     };
 }
 
-//TODO create map to functions that set input values
-
-MQDS::Input::Input()
+MQDS::IO::IO()
 {
     set_defaults();
     read_runfile();
 }
 
-void const MQDS::Input::read_runfile()
+
+void const MQDS::IO::write_run_parameters()
+{
+    {
+        if (runlog.is_open())
+        {
+            //MQDS::Universe::is_master();
+            runlog << "~~~ Welcome to MQDS ~~~" << std::endl;
+            runlog << "Simulation started at " <<
+                   std::ctime(&time_now);
+            runlog << line_delim << std::endl;
+            runlog << "Calculation parameters given as:" << std::endl;
+            runlog << "method = " << method_ << std::endl;
+            runlog << "calculation = " << calculation_ << std::endl;
+            runlog << "system_basis = " << system_basis_ << std::endl;
+            runlog << "nstate = " << nstate_ << std::endl;
+            runlog << "initstate = " << initstate_ << std::endl;
+            runlog << "initstatet = " << initstatet_ << std::endl;
+            runlog << "ntraj = " << ntraj_ << std::endl;
+            runlog << "nstep = " << nstep_ << std::endl;
+            runlog << "nlit = " << nlit_ << std::endl;
+
+            runlog << "-------SQC variables-------" << std::endl;
+
+        }
+        else std::cout << "unable to open run.lig file" << std::endl;
+    }
+}
+
+void const MQDS::IO::read_runfile()
 {
     RunLine line;
 
@@ -102,7 +140,7 @@ void const MQDS::Input::read_runfile()
     runfile.close();
 }
 
-void const MQDS::Input::set_defaults()
+void const MQDS::IO::set_defaults()
 {
     // INTEGER TYPE CALCULATION PARAMETERS
     ntraj_ = 100;
@@ -122,9 +160,10 @@ void const MQDS::Input::set_defaults()
 
     // DOUBLE PRECISION TYPE CALCULATION PARAMETERS
     temperature_ = 77.0;
+    zero_point_energy_ = 0.5;
 }
 
-void const MQDS::Input::assign_value(std::string const &key,
+void const MQDS::IO::assign_value(std::string const &key,
                                std::vector<std::string> const &tokens)
 {
     // ASSIGN STRING VALUES
@@ -145,11 +184,12 @@ void const MQDS::Input::assign_value(std::string const &key,
 
     // DOUBLE PRECISION VALUES
     if (key == "temperature") temperature_ = assign_double(tokens[1]);
+    if (key == "zero_point_energy") zero_point_energy_ = assign_double(tokens[1]);
 
 }
 
 // Vector of keywords for the run.in file
-std::vector<std::string> const MQDS::Input::runfile_keywords =
+std::vector<std::string> const MQDS::IO::runfile_keywords =
         {
                 // CHARACTER/STRING type parameters
                 "method",         // dynamics method choice

@@ -5,7 +5,6 @@
 #include <iostream>
 #include <map>
 #include "../../include/MQDS/units.h"
-#include "../../include/MQDS/output.h"
 #include "../../include/MQDS/universe.h"
 #include "../../include/MQDS/constants.h"
 
