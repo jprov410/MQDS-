@@ -24,3 +24,5 @@ if(MPI_CXX_FOUND)
 else()
     message(ERROR "Must have MPI installed for proper compilation")
 endif()
+
+target_include_directories(mqds.exe PRIVATE ${CMAKE_SOURCE_DIR})

@@ -8,6 +8,7 @@ set(MQDS_HEADER_FILES
         random.h
         )
 
-add_library(HEADERS
-        ${MQDS_HEADER_FILES}
-        )
+# Install the headers
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING PATTERN "*.h","*.hpp")

@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include <complex>
-#include "../../include/MQDS/constants.h"
+#include "MQDS/constants.h"
 
 //TODO: need to add constants for unit conversions from fortran code
 

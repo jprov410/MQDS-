@@ -1,9 +1,10 @@
 #include <iostream>
-#include "../include/MQDS/universe.h"
+#include "MQDS/universe.h"
 #include "MQDS/input_output.h"
-#include "../include/MQDS/units.h"
-#include "../include/MQDS/random.h"
-#include "../include/MQDS/constants.h"
+#include "MQDS/units.h"
+#include "MQDS/random.h"
+#include "MQDS/constants.h"
+
 
 
 using namespace MQDS;

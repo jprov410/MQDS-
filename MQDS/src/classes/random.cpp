@@ -6,8 +6,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
-#include "../../include/MQDS/random.h"
-#include "../../include/MQDS/constants.h"
+#include "MQDS/random.h"
+#include "MQDS/constants.h"
 
 
 // Returns a double precision uniformly-distributed random

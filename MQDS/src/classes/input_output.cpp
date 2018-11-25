@@ -2,8 +2,8 @@
 // Created by Justin Provazza on 10/9/18.
 //
 
-#include "../../include/MQDS/input_output.h"
-#include "../../include/MQDS/units.h"
+#include "MQDS/input_output.h"
+#include "MQDS/units.h"
 #include <iostream>
 #include <fstream>
 #include <string>
