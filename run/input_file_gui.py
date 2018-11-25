@@ -26,26 +26,26 @@ class MQDSInputGUI:
         self.make_label(master, "system_basis", my_row=irow)
         self.make_menu(master,"system_basis",self.system_basis_options(), my_row=irow)
         irow += 1
-        ++irow
+
+        #BATH POTENTIAL
+        self.make_label(master, "bath_potential", my_row=irow)
+        self.make_menu(master,"bath_potential",self.bath_potential_options(), my_row=irow)
+        irow += 1
 
         #NUMBER OF STATES
         self.make_label(master, "nstate", my_row=irow)
         self.make_textbox(master, my_row=irow)
         irow += 1
-        ++irow
-
 
         #INITIAL FORWARD WAVEFUNCTION STATE
         self.make_label(master, "initstate", my_row=irow)
         self.make_textbox(master, my_row=irow)
         irow += 1
-        ++irow
 
         #INITIAL BACKWARD WAVEFUNCTION STATE
         self.make_label(master, "initstatet", my_row=irow)
         self.make_textbox(master, my_row=irow)
         irow += 1
-        ++irow
 
         #NUMBER OF TRAJECTORIES
         self.make_label(master, "ntraj", my_row=irow)
@@ -75,6 +75,16 @@ class MQDSInputGUI:
         #SQC-SPECIFIC PARAMETERS
         self.label = tkinter.Label(master, text="~~~SQC-specific Input Parameters~~~").grid(row=irow,columnspan=2)
         irow += 1
+
+        #ZERO-POINT ENERGY
+        self.make_label(master, "zpe", my_row=irow)
+        self.make_textbox(master, my_row=irow)
+        irow += 1
+
+        #WINDOW SHAPE
+        self.make_label(master, "window_shape", my_row=irow)
+        self.make_menu(master,"window_shape",self.window_shape_options(), my_row=irow)
+        irow += 1
         
         #PRINT RESULTING INPUT FILE
         self.make_file = tkinter.Button(master, text="Make Input File", 
@@ -86,6 +96,7 @@ class MQDSInputGUI:
         self.close_button = tkinter.Button(master, text="Close",
                                            command=master.quit
                                            ).grid(row=irow,columnspan=2)
+        irow += 1
 
     def printfile(self):
         print("Still need to make printable!")
@@ -126,9 +137,24 @@ class MQDSInputGUI:
     def system_basis_options(self):
         system_basis_options = [
             "site",
-            "exciton"
-            ]
+            "exciton",
+            "vibronic",
+            "vibrexciton"
+        ]
         return system_basis_options
+
+    def bath_potential_options(self):
+        bath_potential_options = [
+        "harmonic"
+        ]
+        return bath_potential_options
+
+    def window_shape_options(self):
+        window_shape_options = [
+            "square",
+            "triangular"
+        ]
+        return window_shape_options
 
 root = tkinter.Tk()
 my_gui = MQDSInputGUI(root)

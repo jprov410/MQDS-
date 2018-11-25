@@ -97,35 +97,6 @@ MQDS::IO::IO()
     read_runfile();
 }
 
-
-void const MQDS::IO::write_run_parameters()
-{
-    {
-        if (runlog.is_open())
-        {
-            //MQDS::Universe::is_master();
-            runlog << "~~~ Welcome to MQDS ~~~" << std::endl;
-            runlog << "Simulation started at " <<
-                   std::ctime(&time_now);
-            runlog << line_delim << std::endl;
-            runlog << "Calculation parameters given as:" << std::endl;
-            runlog << "method = " << method_ << std::endl;
-            runlog << "calculation = " << calculation_ << std::endl;
-            runlog << "system_basis = " << system_basis_ << std::endl;
-            runlog << "nstate = " << nstate_ << std::endl;
-            runlog << "initstate = " << initstate_ << std::endl;
-            runlog << "initstatet = " << initstatet_ << std::endl;
-            runlog << "ntraj = " << ntraj_ << std::endl;
-            runlog << "nstep = " << nstep_ << std::endl;
-            runlog << "nlit = " << nlit_ << std::endl;
-
-            runlog << "-------SQC variables-------" << std::endl;
-
-        }
-        else std::cout << "unable to open run.lig file" << std::endl;
-    }
-}
-
 void const MQDS::IO::read_runfile()
 {
     RunLine line;
@@ -186,6 +157,35 @@ void const MQDS::IO::assign_value(std::string const &key,
     if (key == "temperature") temperature_ = assign_double(tokens[1]);
     if (key == "zero_point_energy") zero_point_energy_ = assign_double(tokens[1]);
 
+}
+
+void const MQDS::IO::write_run_parameters()
+{
+    {
+        if (runlog.is_open())
+        {
+            //MQDS::Universe::is_master();
+            runlog << "~~~ Welcome to MQDS ~~~" << std::endl;
+            runlog << "Simulation started on " <<
+                   std::ctime(&time_now);
+            runlog << line_delim << std::endl;
+            runlog << "Calculation parameters given as:" << std::endl;
+            runlog << "method = " << method_ << std::endl;
+            runlog << "calculation = " << calculation_ << std::endl;
+            runlog << "system_basis = " << system_basis_ << std::endl;
+            runlog << "bath_potential = " << bath_potential_ << std::endl;
+            runlog << "nstate = " << nstate_ << std::endl;
+            runlog << "initstate = " << initstate_ << std::endl;
+            runlog << "initstatet = " << initstatet_ << std::endl;
+            runlog << "ntraj = " << ntraj_ << std::endl;
+            runlog << "nstep = " << nstep_ << std::endl;
+            runlog << "nlit = " << nlit_ << std::endl;
+
+            runlog << "-------SQC variables-------" << std::endl;
+
+        }
+        else std::cout << "unable to open run_info.log file" << std::endl;
+    }
 }
 
 // Vector of keywords for the run.in file
