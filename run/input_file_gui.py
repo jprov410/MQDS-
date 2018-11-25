@@ -6,7 +6,8 @@ class MQDSInputGUI:
         self.master = master
         master.title("A simple GUI to generate input files for the MQDS package")
 
-        self.choices = []
+        self.choices = {}
+        self.my_selection = {}
 
         irow = 0
         self.label = tkinter.Label(master, text="Welcome to the MQDS input file GUI!").grid(row=0,columnspan=2)
@@ -88,7 +89,7 @@ class MQDSInputGUI:
         
         #PRINT RESULTING INPUT FILE
         self.make_file = tkinter.Button(master, text="Make Input File", 
-                                        command = self.printfile
+                                        command = lambda: self.printfile()
                                         ).grid(row=irow,columnspan=2)
         irow += 1
 
@@ -98,21 +99,41 @@ class MQDSInputGUI:
                                            ).grid(row=irow,columnspan=2)
         irow += 1
 
+
     def printfile(self):
-        print("Still need to make printable!")
+        #self.choices["method"] = self.my_selection[1].get()
+        #print(self.choices)
+        with open('run.in','w') as f:
+            f.write( "{}    {}\n".format("method", self.my_selection[1].get()) )
+            f.write( "{}    {}\n".format("calculation", self.my_selection[2].get()) )
+            f.write( "{}    {}\n".format("system_basis", self.my_selection[3].get()) )
+            f.write( "{}    {}\n".format("bath_potential", self.my_selection[4].get()) )
+            f.write( "{}    {}\n".format("nstate", self.my_selection[5].get()) )
+            f.write( "{}    {}\n".format("initstate", self.my_selection[6].get()) )
+            f.write( "{}    {}\n".format("initstatet", self.my_selection[7].get()) )
+            f.write( "{}    {}\n".format("ntraj", self.my_selection[8].get()) )
+            f.write( "{}    {}\n".format("nstep", self.my_selection[9].get()) )
+            f.write( "{}    {}\n".format("nlit", self.my_selection[10].get()) )
+            f.write( "{}    {}\n".format("dump", self.my_selection[11].get()) )
+            f.write( "{}    {}\n".format("temperature", self.my_selection[12].get()) )
+            ####################LINE BREAK###################
+            f.write( "{}    {}\n".format("zpe", self.my_selection[14].get()) )
+            f.write( "{}    {}\n".format("window_shape", self.my_selection[15].get()) )
+
     
     def make_label(self,master,my_label,my_row):
         self.label = tkinter.Label(master, text=my_label).grid(row=my_row,column=0)
 
     def make_menu(self,master,my_type,my_options,my_row):
-        my_selection = tkinter.StringVar(master)
-        my_selection.set(my_options[0]) #sets default
-        self.selection = tkinter.OptionMenu(master, my_selection, *my_options)
+        self.my_selection[my_row] = tkinter.StringVar(master)
+        self.my_selection[my_row].set(my_options[0]) #sets default
+        self.selection = tkinter.OptionMenu(master, self.my_selection[my_row], *my_options)
         self.selection.grid(row=my_row,column=1)
-        
+
     def make_textbox(self,master,my_row):
         self.selection = tkinter.Entry(master)
         self.selection.grid(row = my_row, column=1)
+        self.my_selection[my_row] = self.selection
 
     def method_options(self):
         method_options = [
@@ -138,8 +159,8 @@ class MQDSInputGUI:
         system_basis_options = [
             "site",
             "exciton",
-            "vibronic",
-            "vibrexciton"
+            "vibronic_site",
+            "vibronic_exciton"
         ]
         return system_basis_options
 

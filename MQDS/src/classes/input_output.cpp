@@ -166,7 +166,7 @@ void const MQDS::IO::write_run_parameters()
         {
             //MQDS::Universe::is_master();
             runlog << "~~~ Welcome to MQDS ~~~" << std::endl;
-            runlog << "Simulation started on " <<
+            runlog << "Simulation started " <<
                    std::ctime(&time_now);
             runlog << line_delim << std::endl;
             runlog << "Calculation parameters given as:" << std::endl;
