@@ -2,4 +2,6 @@
 
 __*A high-performance molecular quantum dynamics and spectroscopy package*__
 
-**currently under construction**
+**Currently under construction**
+
+**Find the original Fortran code at** https://github.com/jprov410/mqds
