@@ -14,7 +14,6 @@ int main()
     // with a processor-dependent seed
     Universe my_proc;
     Random::set_local_seed(my_proc.my_pe());
-
     // Gather input information
     IO io;
 

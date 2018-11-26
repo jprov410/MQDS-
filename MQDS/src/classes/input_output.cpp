@@ -16,7 +16,7 @@ namespace
     std::ifstream runfile("run.in"); // input file with run parameters
 
     // Output files
-    std::ofstream runlog("run_info.log");
+    std::ofstream runlog("runtime.log");
 
     std::string const comment_delim="//"; // delimiter to separate comments
     std::string const token_delim=" "; // delimiter to separate tokens
@@ -41,33 +41,47 @@ namespace
         {
             uncommented = raw.substr(0,raw.find(comment_delim));
         };
-        // Find all of the tokens un uncommented line
+
+        // Find all of the tokens in uncommented line
         void find_tokens()
         {
             size_t last = 0;
             size_t next = 0;
+            my_tokens.clear();
+
+            //TODO: find out how to keep skipping so can deal with multiple spaces between keyword and token
 
             while ((next = uncommented.find(token_delim,last))
                    != std::string::npos)
             {
                 if (uncommented.substr(last, next - last) != eq_sign)
                 {
-                    my_tokens.push_back(
-                            uncommented.substr(last, next - last));
+                    if ( uncommented.substr(last, next - last) != token_delim)
+                    {
+                        std::cout << uncommented.substr(last, next - last) << std::endl;
+                        my_tokens.push_back(
+                                uncommented.substr(last, next - last));
+                    }
                 }
                 last = next + 1;
             }
             my_tokens.push_back(uncommented.substr(last));
+            std::cout << uncommented.substr(last) << std::endl;
         };
+
         // Check if one of the tokens is an element of keyword vector
         bool const contains_keyword(std::vector<std::string>const &keywords)
         {
             filter_comments();
+            //std::cout << uncommented << std::endl;
             find_tokens();
 
+
+            //std::cout << my_tokens[0] << " and " << my_tokens[1] << std::endl;
             for (auto &j : keywords)
             {
                 if (my_tokens[0] == j){
+                    //std::cout << j << std::endl;
                     my_keyword = my_tokens[0];
                     return true;
                 }
@@ -103,9 +117,14 @@ void const MQDS::IO::read_runfile()
 
     while (std::getline(runfile,line.raw))
     {
+        //std::cout << line.raw << std::endl;
         if (line.contains_keyword(runfile_keywords))
         {
-            assign_value(line.my_keyword,line.my_tokens);
+            //std::cout << "got here" << std::endl;
+            //std::cout << line.my_keyword << std::endl;
+            //std::cout << line.my_tokens[0] << "  " << line.my_tokens[1] << std::endl;
+            //std::cout << line.my_tokens[1] << std::endl;
+            assign_value(line.my_keyword,line.my_tokens[1]);
         }
     }
     runfile.close();
@@ -131,31 +150,31 @@ void const MQDS::IO::set_defaults()
 
     // DOUBLE PRECISION TYPE CALCULATION PARAMETERS
     temperature_ = 77.0;
-    zero_point_energy_ = 0.5;
+    zpe_ = 0.5;
 }
 
 void const MQDS::IO::assign_value(std::string const &key,
-                               std::vector<std::string> const &tokens)
+                               std::string const &token)
 {
     // ASSIGN STRING VALUES
-    if (key == "method") method_ = assign_string(tokens[1]);
-    if (key == "calculation") calculation_ = assign_string(tokens[1]);
-    if (key == "window_shape") window_shape_ = assign_string(tokens[1]);
-    if (key == "system_basis") system_basis_ = assign_string(tokens[1]);
-    if (key == "bath_potential") bath_potential_ = assign_string(tokens[1]);
+    if (key == "method") method_ = assign_string(token);
+    if (key == "calculation") calculation_ = assign_string(token);
+    if (key == "window_shape") window_shape_ = assign_string(token);
+    if (key == "system_basis") system_basis_ = assign_string(token);
+    if (key == "bath_potential") bath_potential_ = assign_string(token);
 
     // ASSIGN INTEGER VALUES
-    if (key == "nstate") nstate_ = assign_integer(tokens[1]);
-    if (key == "ntraj") ntraj_ = assign_integer(tokens[1]);
-    if (key == "nstep") nstep_ = assign_integer(tokens[1]);
-    if (key == "nlit") nlit_ = assign_integer(tokens[1]);
-    if (key == "dump") dump_ = assign_integer(tokens[1]);
-    if (key == "initstate") initstate_ = assign_integer(tokens[1]);
-    if (key == "initstatet") initstatet_ = assign_integer(tokens[1]);
+    if (key == "nstate") nstate_ = assign_integer(token);
+    if (key == "ntraj") ntraj_ = assign_integer(token);
+    if (key == "nstep") nstep_ = assign_integer(token);
+    if (key == "nlit") nlit_ = assign_integer(token);
+    if (key == "dump") dump_ = assign_integer(token);
+    if (key == "initstate") initstate_ = assign_integer(token);
+    if (key == "initstatet") initstatet_ = assign_integer(token);
 
     // DOUBLE PRECISION VALUES
-    if (key == "temperature") temperature_ = assign_double(tokens[1]);
-    if (key == "zero_point_energy") zero_point_energy_ = assign_double(tokens[1]);
+    if (key == "temperature") temperature_ = assign_double(token);
+    if (key == "zpe") zpe_ = assign_double(token);
 
 }
 
@@ -180,8 +199,12 @@ void const MQDS::IO::write_run_parameters()
             runlog << "ntraj = " << ntraj_ << std::endl;
             runlog << "nstep = " << nstep_ << std::endl;
             runlog << "nlit = " << nlit_ << std::endl;
+            runlog << "dump = " << dump_ << std::endl;
+            runlog << "temperature = " << temperature_ << std::endl;
 
             runlog << "-------SQC variables-------" << std::endl;
+            runlog << "zpe = " << zpe_ << std::endl;
+            runlog << "window_shape = " << window_shape_ << std::endl;
 
         }
         else std::cout << "unable to open run_info.log file" << std::endl;
@@ -189,8 +212,7 @@ void const MQDS::IO::write_run_parameters()
 }
 
 // Vector of keywords for the run.in file
-std::vector<std::string> const MQDS::IO::runfile_keywords =
-        {
+std::vector<std::string> const MQDS::IO::runfile_keywords = {
                 // CHARACTER/STRING type parameters
                 "method",         // dynamics method choice
                 "calculation",    // type of calculation
@@ -210,6 +232,7 @@ std::vector<std::string> const MQDS::IO::runfile_keywords =
 
                 // DOUBLE PRECISION type parameters
                 "temperature", // temperature of simulation in Kelvin
+                "zpe", // temperature of simulation in Kelvin
         };
 
 

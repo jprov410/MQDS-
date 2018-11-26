@@ -31,7 +31,7 @@ public:
     int const & initstatet() const {return initstatet_;};
 
     double const & temperature() const {return temperature_;};
-    double const & zero_point_energy() const {return zero_point_energy_;};
+    double const & zpe() const {return zpe_;};
 
 private:
     // FUNCTIONS
@@ -40,7 +40,7 @@ private:
 
 
     void const assign_value(std::string const &key,
-                            std::vector<std::string> const &tokens);
+                            std::string const &token);
 
     // MAPS AND VECTORS OF STRINGS
     std::vector<std::string> static const runfile_keywords;
@@ -54,7 +54,7 @@ private:
 
     // DOUBLES
     double temperature_;
-    double zero_point_energy_;
+    double zpe_;
 
 protected:
 };

@@ -32,8 +32,5 @@ double MQDS::Random::gaussian_random_number(double const &center, double const &
     m_gauss = std::sqrt(-2.0 * std::log(Random::uniform_random_number(0.0, 1.0)))
               * std::cos( 2.0 * Constants::pi * Random::uniform_random_number(0.0, 1.0));
 
-    //res(:) = DSQRT( -2.0_dp * DLOG(make_grn(1,:)) ) * DCOS( 2.0_dp * pi * make_grn(2,:))
-
     return m_gauss;
-
 }
