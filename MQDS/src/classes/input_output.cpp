@@ -6,6 +6,7 @@
 #include "MQDS/units.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <ctime>
@@ -17,16 +18,9 @@ namespace
 
     // Output files
     std::ofstream runlog("runtime.log");
-
     std::string const comment_delim="//"; // delimiter to separate comments
-    std::string const token_delim=" "; // delimiter to separate tokens
-    std::string const eq_sign="="; // delimiter to separate tokens
     std::string const line_delim =
             "-------------------------------------------------";
-    // Current time
-    auto time_now =
-            std::chrono::system_clock::to_time_t
-                    (std::chrono::system_clock::now());
 
     // Structure to deal with input files
     struct RunLine
@@ -48,40 +42,25 @@ namespace
             size_t last = 0;
             size_t next = 0;
             my_tokens.clear();
+            std::istringstream ss(uncommented);
+            std::string token;
 
-            //TODO: find out how to keep skipping so can deal with multiple spaces between keyword and token
-
-            while ((next = uncommented.find(token_delim,last))
-                   != std::string::npos)
+            while ( ! ss.eof() )
             {
-                if (uncommented.substr(last, next - last) != eq_sign)
-                {
-                    if ( uncommented.substr(last, next - last) != token_delim)
-                    {
-                        std::cout << uncommented.substr(last, next - last) << std::endl;
-                        my_tokens.push_back(
-                                uncommented.substr(last, next - last));
-                    }
-                }
-                last = next + 1;
+                ss >> token;
+                if (token != "=") my_tokens.push_back(token);
             }
-            my_tokens.push_back(uncommented.substr(last));
-            std::cout << uncommented.substr(last) << std::endl;
         };
 
         // Check if one of the tokens is an element of keyword vector
         bool const contains_keyword(std::vector<std::string>const &keywords)
         {
             filter_comments();
-            //std::cout << uncommented << std::endl;
             find_tokens();
 
-
-            //std::cout << my_tokens[0] << " and " << my_tokens[1] << std::endl;
             for (auto &j : keywords)
             {
                 if (my_tokens[0] == j){
-                    //std::cout << j << std::endl;
                     my_keyword = my_tokens[0];
                     return true;
                 }
@@ -117,14 +96,9 @@ void const MQDS::IO::read_runfile()
 
     while (std::getline(runfile,line.raw))
     {
-        //std::cout << line.raw << std::endl;
         if (line.contains_keyword(runfile_keywords))
         {
-            //std::cout << "got here" << std::endl;
-            //std::cout << line.my_keyword << std::endl;
-            //std::cout << line.my_tokens[0] << "  " << line.my_tokens[1] << std::endl;
-            //std::cout << line.my_tokens[1] << std::endl;
-            assign_value(line.my_keyword,line.my_tokens[1]);
+            assign_value(line.my_keyword,line.my_tokens);
         }
     }
     runfile.close();
@@ -154,32 +128,36 @@ void const MQDS::IO::set_defaults()
 }
 
 void const MQDS::IO::assign_value(std::string const &key,
-                               std::string const &token)
+                               std::vector<std::string> const &tokens)
 {
     // ASSIGN STRING VALUES
-    if (key == "method") method_ = assign_string(token);
-    if (key == "calculation") calculation_ = assign_string(token);
-    if (key == "window_shape") window_shape_ = assign_string(token);
-    if (key == "system_basis") system_basis_ = assign_string(token);
-    if (key == "bath_potential") bath_potential_ = assign_string(token);
+    if (key == "method") method_ = assign_string(tokens[1]);
+    if (key == "calculation") calculation_ = assign_string(tokens[1]);
+    if (key == "window_shape") window_shape_ = assign_string(tokens[1]);
+    if (key == "system_basis") system_basis_ = assign_string(tokens[1]);
+    if (key == "bath_potential") bath_potential_ = assign_string(tokens[1]);
 
     // ASSIGN INTEGER VALUES
-    if (key == "nstate") nstate_ = assign_integer(token);
-    if (key == "ntraj") ntraj_ = assign_integer(token);
-    if (key == "nstep") nstep_ = assign_integer(token);
-    if (key == "nlit") nlit_ = assign_integer(token);
-    if (key == "dump") dump_ = assign_integer(token);
-    if (key == "initstate") initstate_ = assign_integer(token);
-    if (key == "initstatet") initstatet_ = assign_integer(token);
+    if (key == "nstate") nstate_ = assign_integer(tokens[1]);
+    if (key == "ntraj") ntraj_ = assign_integer(tokens[1]);
+    if (key == "nstep") nstep_ = assign_integer(tokens[1]);
+    if (key == "nlit") nlit_ = assign_integer(tokens[1]);
+    if (key == "dump") dump_ = assign_integer(tokens[1]);
+    if (key == "initstate") initstate_ = assign_integer(tokens[1]);
+    if (key == "initstatet") initstatet_ = assign_integer(tokens[1]);
 
     // DOUBLE PRECISION VALUES
-    if (key == "temperature") temperature_ = assign_double(token);
-    if (key == "zpe") zpe_ = assign_double(token);
+    if (key == "temperature") temperature_ = assign_double(tokens[1]);
+    if (key == "zpe") zpe_ = assign_double(tokens[1]);
 
 }
 
 void const MQDS::IO::write_run_parameters()
 {
+    // Current time
+    auto time_now =
+            std::chrono::system_clock::to_time_t
+                    (std::chrono::system_clock::now());
     {
         if (runlog.is_open())
         {

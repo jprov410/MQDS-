@@ -37,10 +37,8 @@ private:
     // FUNCTIONS
     void const read_runfile();
     void const set_defaults();
-
-
     void const assign_value(std::string const &key,
-                            std::string const &token);
+                            std::vector<std::string> const &tokens);
 
     // MAPS AND VECTORS OF STRINGS
     std::vector<std::string> static const runfile_keywords;
