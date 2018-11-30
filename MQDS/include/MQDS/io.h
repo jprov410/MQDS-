@@ -6,6 +6,7 @@
 #define MQDS_INPUT_H
 #include <vector>
 #include <string>
+#include <fstream>
 namespace MQDS
 {
     class IO;

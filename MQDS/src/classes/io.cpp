@@ -2,7 +2,7 @@
 // Created by Justin Provazza on 10/9/18.
 //
 
-#include "MQDS/input_output.h"
+#include "MQDS/io.h"
 #include "MQDS/units.h"
 #include <iostream>
 #include <fstream>
@@ -13,12 +13,11 @@
 
 namespace
 {
-    // Input files
-    std::ifstream runfile("run.in"); // input file with run parameters
-
-    // Output files
+    // Global output log file
     std::ofstream runlog("runtime.log");
-    std::string const comment_delim="//"; // delimiter to separate comments
+    // Delimiter to separate comments
+    std::string const comment_delim="//";
+    // separatory line for printing in files
     std::string const line_delim =
             "-------------------------------------------------";
 
@@ -71,16 +70,17 @@ namespace
 
     std::string const assign_string( std::string const &val )
     {
-            return val;
+        return val;
     };
+
     int const assign_integer( std::string const &val )
     {
-            return stoi(val);
+        return stoi(val);
     };
 
     double const assign_double( std::string const &val )
     {
-            return stod(val);
+        return stod(val);
     };
 }
 
@@ -92,8 +92,10 @@ MQDS::IO::IO()
 
 void const MQDS::IO::read_runfile()
 {
+    std::ifstream runfile;
     RunLine line;
 
+    runfile.open("run.in");
     while (std::getline(runfile,line.raw))
     {
         if (line.contains_keyword(runfile_keywords))

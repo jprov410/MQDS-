@@ -5,7 +5,6 @@
 #include <iostream>
 #include <map>
 #include "MQDS/units.h"
-#include "MQDS/universe.h"
 #include "MQDS/constants.h"
 
 // TODO: need to add more units and populate the conversion map

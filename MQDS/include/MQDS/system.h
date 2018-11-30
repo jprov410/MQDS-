@@ -5,9 +5,18 @@
 #ifndef MQDS_SYSTEM_H
 #define MQDS_SYSTEM_H
 
+namespace MQDS
+{
+    class System;
+}
 
-class system {
 
+class MQDS::System {
+public:
+    System();
+private:
+
+protected:
 };
 
 

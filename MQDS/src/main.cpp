@@ -1,6 +1,6 @@
 #include <iostream>
 #include "MQDS/universe.h"
-#include "MQDS/input_output.h"
+#include "MQDS/io.h"
 #include "MQDS/units.h"
 #include "MQDS/random.h"
 #include "MQDS/constants.h"

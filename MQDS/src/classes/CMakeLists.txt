@@ -2,7 +2,7 @@ include_directories(${MQDS_SOURCE_DIR}/MQDS/include)
 
 set(MQDS_CLASS_FILES
         universe.cpp
-        input_output.cpp
+        io.cpp
         system.cpp
         bath.cpp
         units.cpp
