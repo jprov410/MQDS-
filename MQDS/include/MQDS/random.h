@@ -6,7 +6,7 @@
 #define MQDS_RANDOM_H
 
 
-namespace MQDS::Random
+namespace Random
 {
     // Sets the psuedo-random number generator seed
     // using the processing element number as an argument

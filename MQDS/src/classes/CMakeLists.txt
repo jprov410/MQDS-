@@ -8,7 +8,8 @@ set(MQDS_CLASS_FILES
         units.cpp
         constants.cpp
         random.cpp
-        )
+        systemfactory.cpp
+        electronic_site.cpp)
 
 add_library(CLASSES
         ${MQDS_CLASS_FILES}

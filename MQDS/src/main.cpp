@@ -1,28 +1,36 @@
 #include <iostream>
+#include <memory>
+#include <functional>
+#include <map>
+#include <vector>
+#include <cassert>
 #include "MQDS/universe.h"
 #include "MQDS/io.h"
 #include "MQDS/units.h"
 #include "MQDS/random.h"
 #include "MQDS/constants.h"
+#include "MQDS/system.h"
+#include "MQDS/electronic_site.h"
+#include "MQDS/systemfactory.h"
 
 
 
 using namespace MQDS;
 int main()
 {
-    // Figure out who I am and provide pseudo-random number generator
-    // with a processor-dependent seed
-    Universe my_proc;
-    Random::set_local_seed(my_proc.my_pe());
-    // Gather input information
-    IO io;
+    std::cout.precision( 17 ); // Set precision for cout
+    Universe my_proc; // Initiate MPI
+    Random::set_local_seed(my_proc.my_pe()); // Set local seed
+    IO io; // Gather input information
+    if (my_proc.is_master()) io.write_run_parameters(); // start runlog
 
-    if (my_proc.is_master()) io.write_run_parameters();
-
-    // Set precision for output
-    std::cout.precision( 17 );
-
-    //std::cout << in.temperature() << std::endl;
-
+    auto system = SystemFactory::Create(io);
+    if(static_cast<bool>(system)) {
+        system->report_type();
+    }
+    else {
+        std::cerr << "Did not initialize properly "<< std::endl;
+    }
+    //std::cout << SystemFactory::
     return 0;
 }

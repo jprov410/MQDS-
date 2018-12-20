@@ -6,7 +6,7 @@
 #define MQDS_UNITS_H
 #include <map>
 
-namespace MQDS::Units
+namespace Units
 {
     // Function that returns unit conversion factor for transforming from
     // units of &from to units of &to

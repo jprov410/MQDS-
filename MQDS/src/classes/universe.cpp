@@ -4,6 +4,7 @@
 
 #include "MQDS/universe.h"
 #include <mpi.h>
+#include <iostream>
 
 
 // Constructor initializes MPI and determines how many processors and who I am

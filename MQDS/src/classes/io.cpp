@@ -100,6 +100,11 @@ void const MQDS::IO::read_runfile()
     {
         if (line.contains_keyword(runfile_keywords))
         {
+            //for (auto &i : line.my_tokens)
+            //{
+//                std::transform(i.begin(), i.end(), i.begin(), ::tolower);
+//            }
+
             assign_value(line.my_keyword,line.my_tokens);
         }
     }
@@ -189,6 +194,34 @@ void const MQDS::IO::write_run_parameters()
         }
         else std::cout << "unable to open run_info.log file" << std::endl;
     }
+}
+
+void const MQDS::IO::write_to_runlog( std::string const &to_write)
+{
+    if (runlog.is_open())
+    {
+        runlog << to_write << std::endl;
+    }
+}
+
+void const MQDS::IO::write_error( std::string const &to_write)
+{
+    std::string error_message;
+    error_message = "** ERROR: " + to_write;
+    write_to_runlog(error_message);
+    error_out();
+}
+
+void const MQDS::IO::write_warning( std::string const &to_write)
+{
+    std::string warning_message;
+    warning_message = "** WARNING: " + to_write;
+    write_to_runlog(warning_message);
+}
+
+void const MQDS::IO::error_out()
+{
+
 }
 
 // Vector of keywords for the run.in file

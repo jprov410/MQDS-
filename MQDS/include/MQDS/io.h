@@ -17,6 +17,8 @@ class MQDS::IO
 public:
     IO();
     void const write_run_parameters();
+    void const write_error(std::string const &to_write);
+    void const write_warning(std::string const &to_write);
 
     std::string const & method() const {return method_;};
     std::string const & calculation() const {return calculation_;};
@@ -40,6 +42,8 @@ private:
     void const set_defaults();
     void const assign_value(std::string const &key,
                             std::vector<std::string> const &tokens);
+    void const write_to_runlog( std::string const &to_write);
+    void const error_out();
 
     // MAPS AND VECTORS OF STRINGS
     std::vector<std::string> static const runfile_keywords;
