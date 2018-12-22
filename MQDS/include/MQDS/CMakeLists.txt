@@ -7,7 +7,7 @@ set(MQDS_HEADER_FILES
         constants.h
         random.h
         systemfactory.h
-        electronic_site.h
+        electronicsite.h
         )
 
 # Install the headers

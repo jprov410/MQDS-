@@ -25,18 +25,15 @@ public:
     virtual ~ElectronicSite() = default;
 
     virtual void report_type() override{
-        std::cout << "inside site electronic" << std::endl;
+        std::cout << "Type: ElectronicSite" << std::endl;
     };
-
-
-    //static std::string get_class_name() { return "SiteElectronic";};
-
 private:
     static bool s_registered;
 protected:
 };
 
 bool MQDS::ElectronicSite::s_registered =
-        MQDS::SystemFactory::Register("ElectronicSite", []() -> std::unique_ptr<MQDS::System> { return std::make_unique<MQDS::ElectronicSite>();});
+        MQDS::SystemFactory::Register("ElectronicSite", []() -> std::unique_ptr<MQDS::System>
+        { return std::make_unique<MQDS::ElectronicSite>();});
 
 #endif //MQDS_SITE_ELECTRONIC_H

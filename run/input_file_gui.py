@@ -137,43 +137,43 @@ class MQDSInputGUI:
 
     def method_options(self):
         method_options = [
-            "pldm",
-            "ipldm",
-            "sqc",
-            "lsc",
-            "equilibrium"
+            "PLDM",
+            "IPLDM",
+            "SQC",
+            "TWA",
+            "Equilibrium"
             ]
         return method_options
         
     def calculation_options(self):
         calculation_options = [
-            "redmat",
-            "absorption",
-            "circular_dichroism",
-            "2des",
-            "1dpp"
+            "Redmat",
+            "Absorption",
+            "CircularDichroism",
+            "TwoDES",
+            "OneDPP"
             ]
         return calculation_options
 
     def system_basis_options(self):
         system_basis_options = [
-            "site",
-            "exciton",
-            "vibronic_site",
-            "vibronic_exciton"
+            "ElectronicSite",
+            "Exciton",
+            "VibronicSite",
+            "Vibrexciton"
         ]
         return system_basis_options
 
     def bath_potential_options(self):
         bath_potential_options = [
-        "harmonic"
+        "Harmonic"
         ]
         return bath_potential_options
 
     def window_shape_options(self):
         window_shape_options = [
-            "square",
-            "triangular"
+            "Square",
+            "Triangle"
         ]
         return window_shape_options
 

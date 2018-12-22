@@ -9,8 +9,3 @@
 #include <vector>
 #include "MQDS/system.h"
 #include "MQDS/io.h"
-
-
-//void MQDS::System::report_type() {
-//    std::cout << "in base class" << std::endl;
-//}

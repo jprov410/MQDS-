@@ -10,7 +10,7 @@
 #include "MQDS/random.h"
 #include "MQDS/constants.h"
 #include "MQDS/system.h"
-#include "MQDS/electronic_site.h"
+#include "MQDS/electronicsite.h"
 #include "MQDS/systemfactory.h"
 
 
@@ -31,6 +31,5 @@ int main()
     else {
         std::cerr << "Did not initialize properly "<< std::endl;
     }
-    //std::cout << SystemFactory::
     return 0;
 }
