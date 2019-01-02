@@ -147,7 +147,7 @@ class MQDSInputGUI:
         
     def calculation_options(self):
         calculation_options = [
-            "Redmat",
+            "RedMat",
             "Absorption",
             "CircularDichroism",
             "TwoDES",
@@ -160,7 +160,7 @@ class MQDSInputGUI:
             "ElectronicSite",
             "Exciton",
             "VibronicSite",
-            "Vibrexciton"
+            "VibronicExciton"
         ]
         return system_basis_options
 
