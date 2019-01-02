@@ -25,7 +25,7 @@ public:
     virtual ~ElectronicSite() = default;
 
     virtual void report_type() override{
-        std::cout << "Type: ElectronicSite" << std::endl;
+        std::cout << "System Type: ElectronicSite" << std::endl;
     };
 private:
     static bool s_registered;

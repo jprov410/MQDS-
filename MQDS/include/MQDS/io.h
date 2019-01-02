@@ -24,6 +24,7 @@ public:
     std::string const & calculation() const {return calculation_;};
     std::string const & window_shape() const {return window_shape_;};
     std::string const & system_basis() const {return system_basis_;};
+    std::string const & bath_potential() const {return bath_potential_;};
 
     int const & ntraj() const {return ntraj_;};
     int const & nstate() const {return nstate_;};

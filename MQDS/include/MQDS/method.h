@@ -2,8 +2,8 @@
 // Created by Justin Provazza on 10/9/18.
 //
 
-#ifndef MQDS_SYSTEM_H
-#define MQDS_SYSTEM_H
+#ifndef MQDS_METHOD_H
+#define MQDS_METHOD_H
 
 #include <iostream>
 #include <string>
@@ -15,13 +15,13 @@
 
 namespace MQDS
 {
-    class System;
+    class Method;
 }
 
-class MQDS::System {
+class MQDS::Method {
 public:
-    System() = default;
-    virtual ~System() = default;
+    Method() = default;
+    virtual ~Method() = default;
 
     virtual void report_type()= 0 ;
 
@@ -31,4 +31,4 @@ protected:
 };
 
 
-#endif //MQDS_SYSTEM_H
+#endif //MQDS_METHOD_H

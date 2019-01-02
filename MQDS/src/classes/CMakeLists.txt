@@ -3,13 +3,18 @@ include_directories(${MQDS_SOURCE_DIR}/MQDS/include)
 set(MQDS_CLASS_FILES
         universe.cpp
         io.cpp
-        system.cpp
-        bath.cpp
         units.cpp
         constants.cpp
         random.cpp
-        systemfactory.cpp
-        electronicsite.cpp)
+        system.cpp
+        electronicsite.cpp
+        bath.cpp
+        harmonic.cpp
+        method.cpp
+        pldm.cpp
+        calculation.cpp
+        redmat.cpp
+        )
 
 add_library(CLASSES
         ${MQDS_CLASS_FILES}

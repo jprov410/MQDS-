@@ -2,8 +2,8 @@
 // Created by Justin Provazza on 10/9/18.
 //
 
-#ifndef MQDS_SYSTEM_H
-#define MQDS_SYSTEM_H
+#ifndef MQDS_CALCULATION_H
+#define MQDS_CALCULATION_H
 
 #include <iostream>
 #include <string>
@@ -15,13 +15,13 @@
 
 namespace MQDS
 {
-    class System;
+    class Calculation;
 }
 
-class MQDS::System {
+class MQDS::Calculation {
 public:
-    System() = default;
-    virtual ~System() = default;
+    Calculation() = default;
+    virtual ~Calculation() = default;
 
     virtual void report_type()= 0 ;
 
@@ -31,4 +31,4 @@ protected:
 };
 
 
-#endif //MQDS_SYSTEM_H
+#endif //MQDS_CALCULATION_H
