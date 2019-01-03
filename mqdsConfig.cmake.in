@@ -1,0 +1,25 @@
+@PACKAGE_INIT@
+
+# Location of includes
+set(MQDS_INCLUDE_DIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_INCLUDEDIR@")
+set(MQDS_INCLUDE_DIRS ${MQDS_INCLUDE_DIR})
+
+# Location of libraries
+if(@BUILD_SHARED_LIBS@)
+    set(MQDS_LIBNAME "${CMAKE_SHARED_LIBRARY_PREFIX}MQDS${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    set(MQDS_shared_FOUND 1)
+else()
+    set(MQDS_LIBNAME "${CMAKE_STATIC_LIBRARY_PREFIX}MQDS${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    set(MQDS_static_FOUND 1)
+endif()
+
+set(MQDS_LIBRARY "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@/${MQDS_LIBNAME}")
+set(MQDS_LIBRARIES ${MQDS_LIBRARY})
+
+check_required_components(MQDS)
+
+# Don't include targets if this file is being picked up by another
+# project which has already built this as a subproject
+if(NOT TARGET MQDS::MQDS)
+    include("${CMAKE_CURRENT_LIST_DIR}/MQDSTargets.cmake")
+endif()

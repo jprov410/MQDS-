@@ -19,11 +19,5 @@ __pycache__/
 *cpython*
 
 #-- Output files --#
-*linrespfunc.out
-pldm.*
-twa.*
-sqc.*
-ipldm.*
 *.log
 *.out
-*.in
