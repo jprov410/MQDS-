@@ -99,7 +99,6 @@ class MQDSInputGUI:
                                            ).grid(row=irow,columnspan=2)
         irow += 1
 
-
     def printfile(self):
         #self.choices["method"] = self.my_selection[1].get()
         #print(self.choices)
@@ -120,7 +119,6 @@ class MQDSInputGUI:
             f.write( "{} {}\n".format("zpe", self.my_selection[14].get()) )
             f.write( "{} {}\n".format("window_shape", self.my_selection[15].get()) )
 
-    
     def make_label(self,master,my_label,my_row):
         self.label = tkinter.Label(master, text=my_label).grid(row=my_row,column=0)
 

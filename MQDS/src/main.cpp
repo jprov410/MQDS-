@@ -26,15 +26,14 @@
 #include "MQDS/harmonic.h"
 #include "MQDS/pldm.h"
 #include "MQDS/redmat.h"
-
 using namespace MQDS;
 int main()
 {
     std::cout.precision( 17 ); // Set precision for cout
-    Universe my_proc; // Initiate MPI
-    Random::set_local_seed(my_proc.my_pe()); // Set local seed
+    Universe pe; // Initiate MPI. (Processing Element) = pe
+    Random::set_local_seed(pe.my_pe()); // Set local seed
     IO io; // Gather input information
-    if (my_proc.is_master()) io.write_run_parameters(); // start runlog
+    if (pe.is_master()) io.write_run_parameters(); // start runlog
 
     auto system = SystemFactory::Create(io);
     if(static_cast<bool>(system)) {
@@ -67,6 +66,7 @@ int main()
     else {
         std::cerr << "Did not initialize Calculation properly "<< std::endl;
     }
+
 
 
     return 0;
