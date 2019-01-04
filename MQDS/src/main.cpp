@@ -67,8 +67,5 @@ int main()
         std::cerr << "Did not initialize Calculation properly "<< std::endl;
     }
 
-
-
-
     return 0;
 }
