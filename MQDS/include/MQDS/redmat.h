@@ -18,13 +18,13 @@ namespace MQDS
     class RedMat;
 }
 
-class MQDS::RedMat : virtual public MQDS::Calculation
+class MQDS::RedMat : public MQDS::Calculation
 {
 public:
     RedMat() = default;
     virtual ~RedMat() = default;
 
-    virtual void report_type() override{
+    virtual void report_type() override {
         std::cout << "Calculation: RedMat" << std::endl;
     };
 private:

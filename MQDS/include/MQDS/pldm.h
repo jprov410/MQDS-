@@ -18,7 +18,7 @@ namespace MQDS
     class PLDM;
 }
 
-class MQDS::PLDM : virtual public MQDS::Method
+class MQDS::PLDM : public MQDS::Method
 {
 public:
     PLDM() = default;

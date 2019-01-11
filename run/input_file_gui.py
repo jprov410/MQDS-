@@ -53,6 +53,11 @@ class MQDSInputGUI:
         self.make_textbox(master, my_row=irow)
         irow += 1
 
+        #RUNTIME IN FEMTOSECONDS
+        self.make_label(master, "runtime", my_row=irow)
+        self.make_textbox(master, my_row=irow)
+        irow += 1
+
         #NUMBER OF BATH TIME STEPS
         self.make_label(master, "nstep", my_row=irow)
         self.make_textbox(master, my_row=irow)
@@ -111,13 +116,14 @@ class MQDSInputGUI:
             f.write( "{} {}\n".format("initstate", self.my_selection[6].get()) )
             f.write( "{} {}\n".format("initstatet", self.my_selection[7].get()) )
             f.write( "{} {}\n".format("ntraj", self.my_selection[8].get()) )
-            f.write( "{} {}\n".format("nstep", self.my_selection[9].get()) )
-            f.write( "{} {}\n".format("nlit", self.my_selection[10].get()) )
-            f.write( "{} {}\n".format("dump", self.my_selection[11].get()) )
-            f.write( "{} {}\n".format("temperature", self.my_selection[12].get()) )
+            f.write( "{} {}\n".format("runtime", self.my_selection[9].get()) )
+            f.write( "{} {}\n".format("nstep", self.my_selection[10].get()) )
+            f.write( "{} {}\n".format("nlit", self.my_selection[11].get()) )
+            f.write( "{} {}\n".format("dump", self.my_selection[12].get()) )
+            f.write( "{} {}\n".format("temperature", self.my_selection[13].get()) )
             ####################LINE BREAK###################
-            f.write( "{} {}\n".format("zpe", self.my_selection[14].get()) )
-            f.write( "{} {}\n".format("window_shape", self.my_selection[15].get()) )
+            f.write( "{} {}\n".format("zpe", self.my_selection[15].get()) )
+            f.write( "{} {}\n".format("window_shape", self.my_selection[16].get()) )
 
     def make_label(self,master,my_label,my_row):
         self.label = tkinter.Label(master, text=my_label).grid(row=my_row,column=0)

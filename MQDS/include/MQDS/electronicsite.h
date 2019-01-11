@@ -18,7 +18,7 @@ namespace MQDS
     class ElectronicSite;
 }
 
-class MQDS::ElectronicSite : virtual public MQDS::System
+class MQDS::ElectronicSite : public MQDS::System
 {
 public:
     ElectronicSite() = default;

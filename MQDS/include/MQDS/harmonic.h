@@ -18,7 +18,7 @@ namespace MQDS
     class Harmonic;
 }
 
-class MQDS::Harmonic : virtual public MQDS::Bath
+class MQDS::Harmonic : public MQDS::Bath
 {
 public:
     Harmonic() = default;

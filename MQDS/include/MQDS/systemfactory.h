@@ -61,13 +61,8 @@ public:
     }
 
 
-
-
-//    static std::unique_ptr<MQDS::System>
-//    Create(const std::string & class_name);
-
 private:
-    static std::map<std::string, TCreateSystemClass>& system_classes_(){
+    static std::map<std::string, TCreateSystemClass> & system_classes_(){
         static std::map<std::string, TCreateSystemClass > s_classes;
         return s_classes;
     };
