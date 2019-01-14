@@ -15,23 +15,21 @@
 
 namespace MQDS
 {
-    class Harmonic;
-}
+    class Harmonic : public MQDS::Bath
+    {
+    public:
+        Harmonic() = default;
 
-class MQDS::Harmonic : public MQDS::Bath
-{
-public:
-    Harmonic() = default;
-    virtual ~Harmonic() = default;
+        virtual ~Harmonic() = default;
 
-    virtual void report_type() override{
-        std::cout << "Bath Potential Type: Harmonic" << std::endl;
+        virtual void report_type() override {
+            std::cout << "Bath Potential Type: Harmonic" << std::endl;
+        };
+    private:
+        static bool s_registered;
+    protected:
     };
-private:
-    static bool s_registered;
-protected:
 };
-
 bool MQDS::Harmonic::s_registered =
         MQDS::BathFactory::Register("Harmonic", []() -> std::unique_ptr<MQDS::Bath>
         { return std::make_unique<MQDS::Harmonic>();});

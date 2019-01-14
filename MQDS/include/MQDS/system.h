@@ -15,19 +15,19 @@
 
 namespace MQDS
 {
-    class System;
-}
+    class System
+    {
+    public:
+        System() = default;
 
-class MQDS::System {
-public:
-    System() = default;
-    virtual ~System() = default;
+        virtual ~System() = default;
 
-    virtual void report_type()= 0 ;
+        virtual void report_type()= 0;
 
-private:
+    private:
 
-protected:
+    protected:
+    };
 };
 
 

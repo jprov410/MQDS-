@@ -12,21 +12,20 @@
 #include <map>
 #include <vector>
 #include <functional>
-
 namespace MQDS
 {
-    class Bath;
-}
+    class Bath
+    {
+    public:
+        Bath() = default;
 
-class MQDS::Bath {
-public:
-    Bath() = default;
-    virtual ~Bath() = default;
+        virtual ~Bath() = default;
 
-    virtual void report_type()= 0 ;
+        virtual void report_type()= 0;
 
-private:
+    private:
 
-protected:
+    protected:
+    };
 };
 #endif //MQDS_BATH_H

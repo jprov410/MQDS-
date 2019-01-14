@@ -15,20 +15,19 @@
 
 namespace MQDS
 {
-    class Method;
-}
+    class Method
+    {
+    public:
+        Method() = default;
 
-class MQDS::Method {
-public:
-    Method() = default;
-    virtual ~Method() = default;
+        virtual ~Method() = default;
 
-    virtual void report_type()= 0 ;
+        virtual void report_type()= 0;
 
-private:
+    private:
 
-protected:
+    protected:
+    };
 };
-
 
 #endif //MQDS_METHOD_H

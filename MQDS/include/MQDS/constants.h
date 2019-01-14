@@ -7,15 +7,16 @@
 
 #include <complex>
 
-namespace Constants
-{
-    // acos(-1)
-    extern double const pi;
-    // imaginary i
-    extern std::complex<double> const eye;
+namespace MQDS {
+    namespace Constants {
+        // acos(-1)
+        extern double const pi;
+        // imaginary i
+        extern std::complex<double> const eye;
 
-    //Library of unit conversions
+        //Library of unit conversions
 
+    };
 };
 
 

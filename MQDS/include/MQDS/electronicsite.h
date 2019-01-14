@@ -15,23 +15,21 @@
 
 namespace MQDS
 {
-    class ElectronicSite;
-}
+    class ElectronicSite : public MQDS::System
+    {
+    public:
+        ElectronicSite() = default;
 
-class MQDS::ElectronicSite : public MQDS::System
-{
-public:
-    ElectronicSite() = default;
-    virtual ~ElectronicSite() = default;
+        virtual ~ElectronicSite() = default;
 
-    virtual void report_type() override{
-        std::cout << "System Type: ElectronicSite" << std::endl;
+        virtual void report_type() override {
+            std::cout << "System Type: ElectronicSite" << std::endl;
+        };
+    private:
+        static bool s_registered;
+    protected:
     };
-private:
-    static bool s_registered;
-protected:
 };
-
 bool MQDS::ElectronicSite::s_registered =
         MQDS::SystemFactory::Register("ElectronicSite", []() -> std::unique_ptr<MQDS::System>
         { return std::make_unique<MQDS::ElectronicSite>();});

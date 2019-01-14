@@ -15,23 +15,21 @@
 
 namespace MQDS
 {
-    class PLDM;
-}
+    class PLDM : public MQDS::Method
+    {
+    public:
+        PLDM() = default;
 
-class MQDS::PLDM : public MQDS::Method
-{
-public:
-    PLDM() = default;
-    virtual ~PLDM() = default;
+        virtual ~PLDM() = default;
 
-    virtual void report_type() override{
-        std::cout << "Method: PLDM" << std::endl;
+        virtual void report_type() override {
+            std::cout << "Method: PLDM" << std::endl;
+        };
+    private:
+        static bool s_registered;
+    protected:
     };
-private:
-    static bool s_registered;
-protected:
 };
-
 bool MQDS::PLDM::s_registered =
         MQDS::MethodFactory::Register("PLDM", []() -> std::unique_ptr<MQDS::Method>
         { return std::make_unique<MQDS::PLDM>();});

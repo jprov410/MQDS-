@@ -13,22 +13,22 @@
 #include <vector>
 #include <functional>
 
+
 namespace MQDS
 {
-    class Calculation;
-}
+    class Calculation
+    {
+    public:
+        Calculation() = default;
 
-class MQDS::Calculation {
-public:
-    Calculation() = default;
-    virtual ~Calculation() = default;
+        virtual ~Calculation() = default;
 
-    virtual void report_type()= 0 ;
+        virtual void report_type()= 0;
 
-private:
+    private:
 
-protected:
+    protected:
+    };
 };
-
 
 #endif //MQDS_CALCULATION_H

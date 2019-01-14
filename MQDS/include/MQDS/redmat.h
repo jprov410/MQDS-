@@ -15,23 +15,21 @@
 
 namespace MQDS
 {
-    class RedMat;
-}
+    class RedMat : public MQDS::Calculation
+    {
+    public:
+        RedMat() = default;
 
-class MQDS::RedMat : public MQDS::Calculation
-{
-public:
-    RedMat() = default;
-    virtual ~RedMat() = default;
+        virtual ~RedMat() = default;
 
-    virtual void report_type() override {
-        std::cout << "Calculation: RedMat" << std::endl;
+        virtual void report_type() override {
+            std::cout << "Calculation: RedMat" << std::endl;
+        };
+    private:
+        static bool s_registered;
+    protected:
     };
-private:
-    static bool s_registered;
-protected:
 };
-
 bool MQDS::RedMat::s_registered =
         MQDS::CalculationFactory::Register("RedMat", []() -> std::unique_ptr<MQDS::Calculation>
         { return std::make_unique<MQDS::RedMat>();});

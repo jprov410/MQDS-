@@ -8,6 +8,6 @@
 
 //TODO: need to add constants for unit conversions from fortran code
 
-double const Constants::pi = 3.141592653589793238463;
-std::complex<double> const Constants::eye = std::sqrt( (std::complex<double>) -1.0 );
+double const MQDS::Constants::pi = 3.141592653589793238463;
+std::complex<double> const MQDS::Constants::eye = std::sqrt( (std::complex<double>) -1.0 );
 
