@@ -13,10 +13,8 @@
 #include <functional>
 #include <vector>
 
-namespace MQDS
-{
-    class RedMat : public MQDS::Calculation
-    {
+namespace MQDS {
+    class RedMat : public Calculation {
     public:
         RedMat() = default;
 
@@ -26,12 +24,10 @@ namespace MQDS
             std::cout << "Calculation: RedMat" << std::endl;
         };
     private:
-        static bool s_registered;
     protected:
     };
+    static bool redmat_registration =
+            MQDS::CalculationFactory::Register("RedMat", []() -> std::unique_ptr<MQDS::Calculation>
+            { return std::make_unique<MQDS::RedMat>(); });
 };
-bool MQDS::RedMat::s_registered =
-        MQDS::CalculationFactory::Register("RedMat", []() -> std::unique_ptr<MQDS::Calculation>
-        { return std::make_unique<MQDS::RedMat>();});
-
 #endif //MQDS_REDMAT_H

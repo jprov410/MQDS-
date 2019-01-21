@@ -26,12 +26,10 @@ namespace MQDS
             std::cout << "Method: PLDM" << std::endl;
         };
     private:
-        static bool s_registered;
     protected:
     };
-};
-bool MQDS::PLDM::s_registered =
+static bool pldm_registration =
         MQDS::MethodFactory::Register("PLDM", []() -> std::unique_ptr<MQDS::Method>
         { return std::make_unique<MQDS::PLDM>();});
-
+};
 #endif //MQDS_PLDM_H

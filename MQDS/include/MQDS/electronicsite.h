@@ -26,12 +26,10 @@ namespace MQDS
             std::cout << "System Type: ElectronicSite" << std::endl;
         };
     private:
-        static bool s_registered;
     protected:
     };
-};
-bool MQDS::ElectronicSite::s_registered =
+    static bool electronicsite_registration =
         MQDS::SystemFactory::Register("ElectronicSite", []() -> std::unique_ptr<MQDS::System>
         { return std::make_unique<MQDS::ElectronicSite>();});
-
+};
 #endif //MQDS_SITE_ELECTRONIC_H

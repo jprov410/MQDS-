@@ -23,7 +23,7 @@
 #include "MQDS/calculationfactory.h"
 //SubClasses
 #include "MQDS/electronicsite.h"
-#include "MQDS/harmonic.h"
+#include "MQDS/harmonicbilinear.h"
 #include "MQDS/pldm.h"
 #include "MQDS/redmat.h"
 using namespace MQDS;
@@ -69,5 +69,6 @@ int main()
         std::cerr << "Did not initialize Calculation properly "<< std::endl;
     }
 
+    bath->init(io);
     return 0;
 }

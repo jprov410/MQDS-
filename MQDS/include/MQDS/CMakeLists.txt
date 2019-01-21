@@ -9,7 +9,7 @@ set(MQDS_HEADER_FILES
         electronicsite.h
         bath.h
         bathfactory.h
-        harmonic.h
+        harmonicbilinear.h
         method.h
         methodfactory.h
         pldm.h

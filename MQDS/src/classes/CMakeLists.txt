@@ -9,7 +9,7 @@ set(MQDS_CLASS_FILES
         system.cpp
         electronicsite.cpp
         bath.cpp
-        harmonic.cpp
+        harmonicbilinear.cpp
         method.cpp
         pldm.cpp
         calculation.cpp

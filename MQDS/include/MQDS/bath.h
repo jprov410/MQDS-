@@ -23,6 +23,7 @@ namespace MQDS
 
         virtual void report_type()= 0;
 
+        virtual void init(IO & my_io)= 0;
     private:
 
     protected:
