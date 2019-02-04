@@ -25,6 +25,13 @@ namespace MQDS
         virtual void report_type() override {
             std::cout << "Method: PLDM" << std::endl;
         };
+
+        virtual void calculate
+                (std::unique_ptr<Calculation> & calculation,
+                 std::unique_ptr<System> & system,
+                 std::unique_ptr<Bath> & bath,
+                 MQDS::IO & my_io) override;
+
     private:
     protected:
     };

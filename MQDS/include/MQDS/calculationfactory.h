@@ -31,7 +31,7 @@ namespace MQDS
             {
                 return it->second();
             }
-            std::cout << "didn't find " << my_io.calculation() << std::endl;
+            std::cout << "didn't find calculation type" << my_io.calculation() << std::endl;
             return nullptr;
         }
 

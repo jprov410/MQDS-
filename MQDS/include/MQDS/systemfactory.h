@@ -30,10 +30,9 @@ namespace MQDS
             {
                 return it->second();
             }
-            std::cout << "didn't find " << my_io.system_basis() << std::endl;
+            std::cout << "didn't find system basis" << my_io.system_basis() << std::endl;
             return nullptr;
         }
-
 
         static bool
         Register(const std::string name, TCreateSystemClass sysCreate) {

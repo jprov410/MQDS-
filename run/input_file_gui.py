@@ -78,6 +78,16 @@ class MQDSInputGUI:
         self.make_textbox(master, my_row=irow)
         irow += 1
 
+        #NUMBER OF BATHS
+        self.make_label(master, "nbath", my_row=irow)
+        self.make_textbox(master, my_row=irow)
+        irow += 1
+
+        #NUMBER OF OSCILLATORS PER BATH
+        self.make_label(master, "nosc", my_row=irow)
+        self.make_textbox(master, my_row=irow)
+        irow += 1
+
         #SQC-SPECIFIC PARAMETERS
         self.label = tkinter.Label(master, text="~~~SQC-specific Input Parameters~~~").grid(row=irow,columnspan=2)
         irow += 1
@@ -121,9 +131,11 @@ class MQDSInputGUI:
             f.write( "{} {}\n".format("nlit", self.my_selection[11].get()) )
             f.write( "{} {}\n".format("dump", self.my_selection[12].get()) )
             f.write( "{} {}\n".format("temperature", self.my_selection[13].get()) )
+            f.write( "{} {}\n".format("nbath", self.my_selection[14].get()) )
+            f.write( "{} {}\n".format("nosc", self.my_selection[15].get()) )
             ####################LINE BREAK###################
-            f.write( "{} {}\n".format("zpe", self.my_selection[15].get()) )
-            f.write( "{} {}\n".format("window_shape", self.my_selection[16].get()) )
+            f.write( "{} {}\n".format("zpe", self.my_selection[17].get()) )
+            f.write( "{} {}\n".format("window_shape", self.my_selection[18].get()) )
 
     def make_label(self,master,my_label,my_row):
         self.label = tkinter.Label(master, text=my_label).grid(row=my_row,column=0)
@@ -170,7 +182,7 @@ class MQDSInputGUI:
 
     def bath_potential_options(self):
         bath_potential_options = [
-        "Harmonic"
+        "HarmonicBilinear"
         ]
         return bath_potential_options
 

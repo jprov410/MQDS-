@@ -31,7 +31,7 @@ namespace MQDS
             {
                 return it->second();
             }
-            std::cout << "didn't find " << my_io.bath_potential() << std::endl;
+            std::cout << "didn't find bath potential" << my_io.bath_potential() << std::endl;
             return nullptr;
         }
 

@@ -16,9 +16,9 @@ namespace MQDS
 
         void const write_run_parameters();
 
-        void const write_error(std::string const &to_write);
+        void static write_error(std::string const &to_write);
 
-        void const write_warning(std::string const &to_write);
+        void static write_warning(std::string const &to_write);
 
         std::string const &method() const { return method_; };
 
@@ -44,9 +44,17 @@ namespace MQDS
 
         int const &initstatet() const { return initstatet_; };
 
+        int const &nbath() const { return nbath_; };
+
+        int const &nosc() const { return nosc_; };
+
         double const &temperature() const { return temperature_; };
 
         double const &zpe() const { return zpe_; };
+
+        double const &runtime() const { return runtime_; };
+
+        //static void const read_spectral_density();
 
     private:
         // FUNCTIONS
@@ -57,17 +65,16 @@ namespace MQDS
         void const assign_value(std::string const &key,
                                 std::vector<std::string> const &tokens);
 
-        void const write_to_runlog(std::string const &to_write);
+        void static write_to_runlog(std::string const &to_write);
 
-        void const error_out();
+        void static error_out();
 
-
-
-        // MAPS AND VECTORS OF STRINGS
+        // MAPS AND VECTORS
         std::vector<std::string> static const runfile_keywords;
 
         // INTEGERS
-        int nstate_, ntraj_, nstep_, nlit_, dump_, initstate_, initstatet_;
+        int nstate_, ntraj_, nstep_, nlit_;
+        int dump_, initstate_, initstatet_, nbath_, nosc_;
 
         // STRINGS
         std::string method_, calculation_, window_shape_;
@@ -76,7 +83,7 @@ namespace MQDS
         // DOUBLES
         double temperature_;
         double zpe_;
-
+        double runtime_;
     protected:
     };
 };

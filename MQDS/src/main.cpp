@@ -1,5 +1,6 @@
 //External Libraries
 #include <iostream>
+#include <stdexcept>
 #include <memory>
 #include <functional>
 #include <map>
@@ -33,42 +34,23 @@ int main()
     Universe pe; // Initiate MPI. (Processing Element) = pe
     Random::set_local_seed(pe.my_pe()); // Set local seed
 
-    IO io; // Gather input information
-
-    if (pe.is_master()) io.write_run_parameters(); // start runlog
-
-    auto system = SystemFactory::Create(io);
-    if(static_cast<bool>(system)) {
-        system->report_type();
+    try
+    {
+        IO io; // Gather input information
+        if (pe.is_master()) io.write_run_parameters(); // start runlog
+        auto method = MethodFactory::Create(io);
+        auto calculation = CalculationFactory::Create(io);
+        auto system = SystemFactory::Create(io);
+        auto bath = BathFactory::Create(io);
+        method->calculate(calculation,system,bath,io);
+        //calculation->write_result(io);
     }
-    else {
-        std::cerr << "Did not initialize System properly "<< std::endl;
-    }
-
-    auto bath = BathFactory::Create(io);
-    if(static_cast<bool>(bath)) {
-        bath->report_type();
-    }
-    else {
-        std::cerr << "Did not initialize Bath properly "<< std::endl;
+    catch(const std::exception &ex)
+    {
+        IO::write_error("MQDS has encountered a problem");
+        IO::write_error(ex.what());
     }
 
-    auto method = MethodFactory::Create(io);
-    if(static_cast<bool>(method)) {
-        method->report_type();
-    }
-    else {
-        std::cerr << "Did not initialize Method properly "<< std::endl;
-    }
 
-    auto calculation = CalculationFactory::Create(io);
-    if(static_cast<bool>(calculation)) {
-        calculation->report_type();
-    }
-    else {
-        std::cerr << "Did not initialize Calculation properly "<< std::endl;
-    }
-
-    bath->init(io);
     return 0;
 }

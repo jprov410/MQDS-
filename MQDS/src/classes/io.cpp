@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <memory>
+#include <exception>
 
 namespace
 {
@@ -100,15 +102,10 @@ void const MQDS::IO::read_runfile()
     {
         if (line.contains_keyword(runfile_keywords))
         {
-            //for (auto &i : line.my_tokens)
-            //{
-//                std::transform(i.begin(), i.end(), i.begin(), ::tolower);
-//            }
-
             assign_value(line.my_keyword,line.my_tokens);
         }
     }
-    runfile.close();
+     runfile.close();
 }
 
 void const MQDS::IO::set_defaults()
@@ -121,17 +118,20 @@ void const MQDS::IO::set_defaults()
     dump_ = 1;
     initstate_ = 1;
     initstatet_ = 1;
+    nbath_ = 2;
+    nosc_ = 100;
 
     // STRING TYPE CALCULATION PARAMETERS
-    method_ = "pldm";
-    calculation_ = "redmat";
-    window_shape_= "square";
-    system_basis_ = "site";
-    bath_potential_ = "harmonic";
+    method_ = "PLDM";
+    calculation_ = "RedMat";
+    window_shape_= "Square";
+    system_basis_ = "ElectronicSite";
+    bath_potential_ = "HarmonicBilinear";
 
     // DOUBLE PRECISION TYPE CALCULATION PARAMETERS
     temperature_ = 77.0;
     zpe_ = 0.5;
+    runtime_ = 1000.0;
 }
 
 void const MQDS::IO::assign_value(std::string const &key,
@@ -152,10 +152,13 @@ void const MQDS::IO::assign_value(std::string const &key,
     if (key == "dump") dump_ = assign_integer(tokens[1]);
     if (key == "initstate") initstate_ = assign_integer(tokens[1]);
     if (key == "initstatet") initstatet_ = assign_integer(tokens[1]);
+    if (key == "nbath") nbath_ = assign_integer(tokens[1]);
+    if (key == "nosc") nosc_ = assign_integer(tokens[1]);
 
     // DOUBLE PRECISION VALUES
     if (key == "temperature") temperature_ = assign_double(tokens[1]);
     if (key == "zpe") zpe_ = assign_double(tokens[1]);
+    if (key == "runtime") runtime_ = assign_double(tokens[1]);
 
 }
 
@@ -178,6 +181,8 @@ void const MQDS::IO::write_run_parameters()
             runlog << "calculation = " << calculation_ << std::endl;
             runlog << "system_basis = " << system_basis_ << std::endl;
             runlog << "bath_potential = " << bath_potential_ << std::endl;
+
+            runlog << "runtime = " << runtime_ << std::endl;
             runlog << "nstate = " << nstate_ << std::endl;
             runlog << "initstate = " << initstate_ << std::endl;
             runlog << "initstatet = " << initstatet_ << std::endl;
@@ -186,6 +191,9 @@ void const MQDS::IO::write_run_parameters()
             runlog << "nlit = " << nlit_ << std::endl;
             runlog << "dump = " << dump_ << std::endl;
             runlog << "temperature = " << temperature_ << std::endl;
+
+            runlog << "nbath = " << nbath_ << std::endl;
+            runlog << "nosc = " << nosc_ << std::endl;
 
             runlog << "-------SQC variables-------" << std::endl;
             runlog << "zpe = " << zpe_ << std::endl;
@@ -196,7 +204,7 @@ void const MQDS::IO::write_run_parameters()
     }
 }
 
-void const MQDS::IO::write_to_runlog( std::string const &to_write)
+void MQDS::IO::write_to_runlog( std::string const &to_write)
 {
     if (runlog.is_open())
     {
@@ -204,7 +212,7 @@ void const MQDS::IO::write_to_runlog( std::string const &to_write)
     }
 }
 
-void const MQDS::IO::write_error( std::string const &to_write)
+void MQDS::IO::write_error(std::string const &to_write)
 {
     std::string error_message;
     error_message = "** ERROR: " + to_write;
@@ -212,16 +220,15 @@ void const MQDS::IO::write_error( std::string const &to_write)
     error_out();
 }
 
-void const MQDS::IO::write_warning( std::string const &to_write)
+void MQDS::IO::write_warning( std::string const &to_write)
 {
     std::string warning_message;
     warning_message = "** WARNING: " + to_write;
     write_to_runlog(warning_message);
 }
 
-void const MQDS::IO::error_out()
-{
-
+void MQDS::IO::error_out(){
+    throw std::exception();
 }
 
 // Vector of keywords for the run.in file
@@ -238,7 +245,8 @@ std::vector<std::string> const MQDS::IO::runfile_keywords = {
                 "ntraj",     // number of trajectories for trajectory-based methods
                 "nstep",     // number of time steps in simulation
                 "nlit",      // number of little steps per big step if need finer
-                // integration grid
+                "nbath",      // number of independent baths
+                "nosc",      // number of oscillators per independent bath
                 "dump",      // number of steps per observation
                 "initstate", // initial state for fwd wavefunction
                 "initstatet",// initial state for bkwd wavefunction
@@ -246,6 +254,7 @@ std::vector<std::string> const MQDS::IO::runfile_keywords = {
                 // DOUBLE PRECISION type parameters
                 "temperature", // temperature of simulation in Kelvin
                 "zpe", // temperature of simulation in Kelvin
+                "runtime", // simulation time in femtoseconds
         };
 
 

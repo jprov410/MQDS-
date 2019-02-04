@@ -8,6 +8,9 @@
 #include <iostream>
 #include <string>
 #include "MQDS/io.h"
+#include "calculation.h"
+#include "system.h"
+#include "bath.h"
 #include <memory>
 #include <map>
 #include <vector>
@@ -23,6 +26,12 @@ namespace MQDS
         virtual ~Method() = default;
 
         virtual void report_type()= 0;
+
+        virtual void calculate
+                (std::unique_ptr<Calculation> & calculation,
+                 std::unique_ptr<System> & system,
+                 std::unique_ptr<Bath> & bath,
+                 MQDS::IO & my_io)=0;
 
     private:
 

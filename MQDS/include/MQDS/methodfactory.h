@@ -30,7 +30,7 @@ namespace MQDS
             {
                 return it->second();
             }
-            std::cout << "didn't find " << my_io.method() << std::endl;
+            std::cout << "didn't find method type " << my_io.method() << std::endl;
             return nullptr;
         }
 

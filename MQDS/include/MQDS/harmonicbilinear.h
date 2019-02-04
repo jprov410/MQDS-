@@ -19,22 +19,27 @@ namespace MQDS
     class HarmonicBilinear : public Bath
     {
     public:
-        HarmonicBilinear() = default;
+        HarmonicBilinear();
 
         virtual ~HarmonicBilinear() = default;
 
         virtual void report_type() override {
-            std::cout << "Bath Potential Type: HarmonicBilinear" << std::endl;
+            std::cerr << "Bath Potential Type: HarmonicBilinear" << std::endl;
         };
 
-        virtual void init(IO & my_io) override ;
+        virtual std::vector<std::vector<double>> const initial_conditions
+                (const int &nbath, const int &nosc) override;
+
+        virtual void read_spectral_density(const int &nbath,const int &nosc,const int &nstate) override;
+
+        virtual void const propagate_half_step() override;
 
     private:
-        void const read_spectral_density(IO & my_io);
     protected:
     };
-    static bool harmonicbilinear_registration= MQDS::BathFactory::Register("HarmonicBilinear", []() -> std::unique_ptr<MQDS::Bath>
-    { return std::make_unique<MQDS::HarmonicBilinear>(); });;
+    static bool harmonicbilinear_registration= MQDS::BathFactory::Register
+            ("HarmonicBilinear", []() -> std::unique_ptr<MQDS::Bath>
+            { return std::make_unique<MQDS::HarmonicBilinear>(); });;
 };
 
 

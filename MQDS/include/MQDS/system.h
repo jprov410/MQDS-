@@ -18,15 +18,18 @@ namespace MQDS
     class System
     {
     public:
-        System() = default;
+        System()=default;
 
         virtual ~System() = default;
 
         virtual void report_type()= 0;
 
-    private:
+        virtual void read_input_hamiltonian(int const &nstate);
 
+        virtual std::vector<std::vector<double>> &hamiltonian(){return hamiltonian_;};
     protected:
+        std::vector<std::vector<double>> hamiltonian_;
+    private:
     };
 };
 
