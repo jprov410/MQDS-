@@ -13,10 +13,10 @@
 #include "MQDS/random.h"
 #include "MQDS/constants.h"
 //SuperClasses
-#include "MQDS/bath.h"
-#include "MQDS/system.h"
-#include "MQDS/method.h"
 #include "MQDS/calculation.h"
+#include "MQDS/method.h"
+#include "MQDS/system.h"
+#include "MQDS/bath.h"
 //Factories
 #include "MQDS/systemfactory.h"
 #include "MQDS/bathfactory.h"
@@ -39,11 +39,11 @@ int main()
         IO io; // Gather input information
         if (pe.is_master()) io.write_run_parameters(); // start runlog
         auto method = MethodFactory::Create(io);
-        auto calculation = CalculationFactory::Create(io);
         auto system = SystemFactory::Create(io);
         auto bath = BathFactory::Create(io);
-        method->calculate(calculation,system,bath,io);
-        //calculation->write_result(io);
+        auto calculation = CalculationFactory::Create(io);
+
+        calculation->calculate(method,system,bath,io,pe);
     }
     catch(const std::exception &ex)
     {

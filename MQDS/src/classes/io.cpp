@@ -116,8 +116,8 @@ void const MQDS::IO::set_defaults()
     nstep_ = 100;
     nlit_ = 20;
     dump_ = 1;
-    initstate_ = 1;
-    initstatet_ = 1;
+    initstate_ = 0;
+    initstatet_ = 0;
     nbath_ = 2;
     nosc_ = 100;
 
@@ -150,10 +150,12 @@ void const MQDS::IO::assign_value(std::string const &key,
     if (key == "nstep") nstep_ = assign_integer(tokens[1]);
     if (key == "nlit") nlit_ = assign_integer(tokens[1]);
     if (key == "dump") dump_ = assign_integer(tokens[1]);
-    if (key == "initstate") initstate_ = assign_integer(tokens[1]);
-    if (key == "initstatet") initstatet_ = assign_integer(tokens[1]);
     if (key == "nbath") nbath_ = assign_integer(tokens[1]);
     if (key == "nosc") nosc_ = assign_integer(tokens[1]);
+
+    //SUBTRACT 1 FROM STATE LABELS TO ACCOUNT FOR INDEXING FROM 0->N-1
+    if (key == "initstate") initstate_ = assign_integer(tokens[1])-1;
+    if (key == "initstatet") initstatet_ = assign_integer(tokens[1])-1;
 
     // DOUBLE PRECISION VALUES
     if (key == "temperature") temperature_ = assign_double(tokens[1]);
@@ -184,8 +186,8 @@ void const MQDS::IO::write_run_parameters()
 
             runlog << "runtime = " << runtime_ << std::endl;
             runlog << "nstate = " << nstate_ << std::endl;
-            runlog << "initstate = " << initstate_ << std::endl;
-            runlog << "initstatet = " << initstatet_ << std::endl;
+            runlog << "initstate = " << initstate_+1 << std::endl;
+            runlog << "initstatet = " << initstatet_+1 << std::endl;
             runlog << "ntraj = " << ntraj_ << std::endl;
             runlog << "nstep = " << nstep_ << std::endl;
             runlog << "nlit = " << nlit_ << std::endl;
@@ -218,6 +220,8 @@ void MQDS::IO::write_error(std::string const &to_write)
     error_message = "** ERROR: " + to_write;
     write_to_runlog(error_message);
     error_out();
+    // throw runtime error here instead of calling error out
+
 }
 
 void MQDS::IO::write_warning( std::string const &to_write)

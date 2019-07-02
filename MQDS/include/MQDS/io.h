@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+//#include "MQDS/universe.h"
 namespace MQDS
 {
     class IO
@@ -54,7 +55,6 @@ namespace MQDS
 
         double const &runtime() const { return runtime_; };
 
-        //static void const read_spectral_density();
 
     private:
         // FUNCTIONS

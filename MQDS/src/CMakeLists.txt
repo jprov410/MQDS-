@@ -20,7 +20,8 @@ if(MPI_CXX_FOUND)
             ${MQDS_LIBRARIES}
             MPI::MPI_CXX
             ${LAPACK_LIBRARIES}
-            ${BLAS_LIBRARIES})
+            ${BLAS_LIBRARIES}
+            )
 else()
     message(ERROR "Must have MPI installed for proper compilation")
 endif()

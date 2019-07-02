@@ -5,6 +5,8 @@
 #ifndef MQDS_UNIVERSE_H
 #define MQDS_UNIVERSE_H
 
+#include <Eigen/Dense>
+
 namespace MQDS
 {
     class Universe
@@ -22,6 +24,7 @@ namespace MQDS
 
         void broadcast();
 
+        std::vector<Eigen::MatrixXcd> collect_result(std::vector<Eigen::MatrixXcd> & result);
     private:
         int num_procs_;
         int my_pe_;

@@ -7,15 +7,18 @@
 
 #include "MQDS/method.h"
 #include "MQDS/methodfactory.h"
+#include "MQDS/universe.h"
 #include <memory>
 #include <iostream>
 #include <map>
 #include <functional>
 #include <vector>
+#include <complex>
+#include <Eigen/Dense>
 
 namespace MQDS
 {
-    class PLDM : public MQDS::Method
+    class PLDM : public Method
     {
     public:
         PLDM() = default;
@@ -26,12 +29,30 @@ namespace MQDS
             std::cout << "Method: PLDM" << std::endl;
         };
 
-        virtual void calculate
-                (std::unique_ptr<Calculation> & calculation,
-                 std::unique_ptr<System> & system,
-                 std::unique_ptr<Bath> & bath,
-                 MQDS::IO & my_io) override;
 
+        virtual void initialize_method(std::unique_ptr<System> & system,
+                                       std::unique_ptr<Bath> & bath,
+                                       MQDS::IO & io) override;
+
+        virtual std::vector<Eigen::MatrixXcd> calculate_reduced_density_matrix(std::unique_ptr<System> & system,
+                                                      std::unique_ptr<Bath> & bath,
+                                                      MQDS::IO & io,
+                                                      MQDS::Universe & pe) override;
+
+        virtual void propagate(std::unique_ptr<System> & system,
+                               std::unique_ptr<Bath> & bath,
+                               const double & dt,
+                               const int & nlit) override;
+
+        virtual Eigen::MatrixXcd
+        redmat_function(std::unique_ptr<System> & system) override;
+
+        virtual std::vector<Eigen::MatrixXd> what_bath_feels(std::unique_ptr<System> & system,
+                                                             std::unique_ptr<Bath> & bath) override;
+
+        virtual Eigen::MatrixXd what_system_feels(const int &ibath,
+                                                  std::unique_ptr<System> & system,
+                                                  std::unique_ptr<Bath> & bath) override;
     private:
     protected:
     };

@@ -19,7 +19,10 @@ namespace MQDS
         extern std::string const atomic_angular_frequency;
         extern std::string const wavenumber;
         extern std::string const seconds;
+        extern std::string const femtoseconds;
+        extern std::string const atomic_time;
         extern std::string const hertz;
+        extern std::string const kelvin;
 
         // Map that takes input strings and returns float unit conversion factor
         //extern std::map<std::pair<std::string, std::string >, double> const conversion_map;

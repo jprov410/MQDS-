@@ -18,6 +18,11 @@ include(GNUInstallDirs)
 find_package(LAPACK)
 find_package(MPI)
 
+#find_package (Eigen3 3.3 NO_MODULE)
+#if (TARGET Eigen3::Eigen)
+#    # Use the imported target
+#endif (TARGET Eigen3::Eigen)
+
 if(MPI_FOUND)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MPI_CXX_COMPILE_FLAGS} ")
 endif()

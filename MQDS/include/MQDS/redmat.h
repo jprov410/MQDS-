@@ -23,6 +23,17 @@ namespace MQDS {
         virtual void report_type() override {
             std::cout << "Calculation: RedMat" << std::endl;
         };
+
+        virtual void calculate
+                (std::unique_ptr<Method> & method,
+                 std::unique_ptr<System> & system,
+                 std::unique_ptr<Bath> & bath,
+                 MQDS::IO & io,
+                 MQDS::Universe & pe) override;
+
+        virtual void allocate_result(MQDS::IO & io) override;
+
+        virtual void write_result(MQDS::IO & io) override;
     private:
     protected:
     };
