@@ -29,7 +29,6 @@ namespace MQDS
 
     private:
     protected:
-        virtual std::complex<double> get_initial_mapping_weight(const int &initstate, const int &initstatet) override;
     };
     static bool electronicsite_registration =
             MQDS::SystemFactory::Register("ElectronicSite", []() -> std::unique_ptr<MQDS::System>

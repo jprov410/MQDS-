@@ -25,7 +25,9 @@ namespace MQDS
 
         virtual void report_type()= 0;
 
-        virtual void read_input(int const &nstate);
+        virtual void read_hamiltonian(int const &nstate);
+
+        virtual void read_dipole_matrix(int const &nstate);
 
         virtual Eigen::MatrixXd & hamiltonian(){return hamiltonian_;};
 
@@ -37,10 +39,10 @@ namespace MQDS
 
         virtual void initialize_mapping_variables(const int &ncopies, const int &nstate);
 
-        virtual void get_mapping_initial_conditions(const double &mean,
-                                                    const double &sigma,
-                                                    const int &initstate,
-                                                    const int &initstatet);
+        virtual void gaussian_mapping_initial_conditions(const double &mean,
+                                                         const double &sigma);
+
+        virtual void assign_initial_trajectory_weight(const std::complex<double> & initial_weight);
 
         virtual void advance_mapping_variables(const int &system_copy,
                                                 const Eigen::MatrixXd &what_system_feels,
@@ -51,8 +53,7 @@ namespace MQDS
         std::complex<double> initial_trajectory_weight_;
         Eigen::MatrixXd hamiltonian_;
         std::vector<Eigen::VectorXd> position_map_,momentum_map_;
-
-        virtual std::complex<double> get_initial_mapping_weight(const int &initstate, const int &initstatet)=0;
+        std::vector<std::vector<Eigen::Vector3d>> dipole_components_;
     private:
     };
 };

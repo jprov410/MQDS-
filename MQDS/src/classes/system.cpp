@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <complex>
 #include "MQDS/system.h"
 #include "MQDS/io.h"
 #include "MQDS/units.h"
@@ -45,6 +46,47 @@ void MQDS::System::read_input(int const &nstate)
     sys_ham_input.close();
 }
 
+void MQDS::System::read_dipole_matrix(int const &nstate){
+    dipole_components_.resize(nstate);
+    std::ifstream dipole_input;
+
+    for (int istate=0; istate<nstate; ++istate)
+    {
+        dipole_components_[istate].resize(nstate);
+    }
+
+    int i=0,j=0;
+    double element;
+//TODO LOOP OVER X,Y,Z, COMPONENTS. MAKE SURE TO READ NSTATE X NSTATE
+    dipole_input.open("dipole.in");
+    if (dipole_input.is_open())
+    {
+        for (std::string line; std::getline(dipole_input, line);)
+        {
+            if (line.find("//")==0) continue;
+            std::istringstream ss(line);
+            i = 0;
+            while(ss >> element)
+            {
+                //dipole_components_[j][i](idim) = element;
+                std::cout << element << std::endl;
+                i++;
+            }
+            j++;
+        }
+        if (j != nstate || i != nstate)
+        {
+            MQDS::IO::write_error("Input system dipole matrix size doesn't match nstate");
+        }
+    }
+    else
+    {
+        MQDS::IO::write_error("Unable to find dipole.in file");
+    }
+    dipole_input.close();
+     }
+
+
 void MQDS::System::initialize_mapping_variables(const int &ncopies, const int &nstate)
 {
     position_map_.resize(ncopies);
@@ -58,10 +100,8 @@ void MQDS::System::initialize_mapping_variables(const int &ncopies, const int &n
     return;
 }
 
-void MQDS::System::get_mapping_initial_conditions(const double &mean,
-                                                  const double &sigma,
-                                                  const int &initstate,
-                                                  const int &initstatet)
+void MQDS::System::gaussian_mapping_initial_conditions(const double &mean,
+                                                  const double &sigma)
 {
     for (int icopy=0; icopy<position_map_.size(); ++icopy)
     {
@@ -71,7 +111,12 @@ void MQDS::System::get_mapping_initial_conditions(const double &mean,
             momentum_map_[icopy](istate) = MQDS::Random::gaussian_random_number(mean, sigma);
         }
     }
-    initial_trajectory_weight_=get_initial_mapping_weight(initstate,initstatet);
+    return;
+}
+
+void MQDS::System::assign_initial_trajectory_weight(const std::complex<double> & initial_weight)
+{
+    initial_trajectory_weight_=initial_weight;
     return;
 }
 

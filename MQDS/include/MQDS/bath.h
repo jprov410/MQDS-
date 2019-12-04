@@ -37,7 +37,7 @@ namespace MQDS
 
         virtual void read_input(const int &nbath,const int &nosc,const int &nstate){};
 
-        virtual void get_initial_conditions(const double &beta){};
+        virtual void bare_boltzmann_wigner_initial_conditions(const double &beta){};
 
         virtual void advance_position(const double &timestep);
 

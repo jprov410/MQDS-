@@ -29,7 +29,7 @@ namespace MQDS
 
         virtual void read_input(const int &nbath,const int &nosc,const int &nstate) override;
 
-        virtual void get_initial_conditions(const double &beta) override;
+        virtual void bare_boltzmann_wigner_initial_conditions(const double &beta) override;
 
         virtual void compute_force
                 (const std::vector<Eigen::MatrixXd> & method_specific_sb) override;

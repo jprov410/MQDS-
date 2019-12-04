@@ -19,7 +19,8 @@ std::string const MQDS::Units::kelvin="kelvin";
 std::string const MQDS::Units::femtoseconds="fs";
 std::string const MQDS::Units::atomic_time="au_time";
 
-namespace {
+namespace
+{
     std::map<std::pair<std::string, std::string>, double>
     const conversion_map = {
             {std::make_pair(MQDS::Units::wavenumber, MQDS::Units::atomic_energy), 4.556335253e-6},

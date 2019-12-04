@@ -75,6 +75,5 @@ std::vector<Eigen::MatrixXcd> MQDS::Universe::collect_result(std::vector<Eigen::
         }
     }
     return avg;
-
 }
 

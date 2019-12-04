@@ -26,7 +26,9 @@
 #include "MQDS/electronicsite.h"
 #include "MQDS/harmonicbilinear.h"
 #include "MQDS/pldm.h"
+#include "MQDS/twa.h"
 #include "MQDS/redmat.h"
+#include "MQDS/absorption.h"
 using namespace MQDS;
 int main()
 {

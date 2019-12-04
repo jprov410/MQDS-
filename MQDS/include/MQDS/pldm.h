@@ -53,6 +53,10 @@ namespace MQDS
         virtual Eigen::MatrixXd what_system_feels(const int &ibath,
                                                   std::unique_ptr<System> & system,
                                                   std::unique_ptr<Bath> & bath) override;
+
+        virtual std::complex<double> initial_trajectory_weight(std::unique_ptr<System> & system,
+                                                               const int & initstate,
+                                                               const int & initstatet) override;
     private:
     protected:
     };

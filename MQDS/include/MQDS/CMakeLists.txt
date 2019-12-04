@@ -2,6 +2,7 @@ set(MQDS_HEADER_FILES
         method.h
         methodfactory.h
         pldm.h
+        twa.h
         universe.h
         io.h
         units.h
@@ -10,6 +11,7 @@ set(MQDS_HEADER_FILES
         calculation.h
         calculationfactory.h
         redmat.h
+        absorption.h
         system.h
         systemfactory.h
         electronicsite.h

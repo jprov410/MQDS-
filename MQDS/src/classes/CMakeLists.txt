@@ -12,8 +12,10 @@ set(MQDS_CLASS_FILES
         harmonicbilinear.cpp
         method.cpp
         pldm.cpp
+        twa.cpp
         calculation.cpp
         redmat.cpp
+        absorption.cpp
         )
 
 add_library(CLASSES

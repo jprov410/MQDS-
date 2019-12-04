@@ -2,7 +2,7 @@
 // Created by Justin Provazza on 12/8/18.
 //
 
-#include "MQDS/redmat.h"
+#include "MQDS/absorption.h"
 #include "MQDS/calculation.h"
 #include "MQDS/method.h"
 #include "MQDS/system.h"
@@ -13,7 +13,7 @@
 
 
 
-void MQDS::RedMat::calculate
+void MQDS::Absorption::calculate
         (std::unique_ptr<Method> & method,
          std::unique_ptr<System> & system,
          std::unique_ptr<Bath> & bath,
@@ -21,21 +21,24 @@ void MQDS::RedMat::calculate
          MQDS::Universe & pe)
 {
     // READ THE NECESSARY INPUT DATA FOR DESCTRIPTION OF SYSTEM, BATH
-    system->read_input(io.nstate());
+    system->read_hamiltonian(io.nstate());
+    system->read_dipole_matrix(io.nstate());
     bath->read_input(io.nbath(),io.nosc(),io.nstate());
     // ALLOCATE MEMORY FOR NECESSARY MATRICES/VECTORS FOR SYSTEM,BATH WITH METHOD-OF-CHOICE
     method->initialize_method(system,bath,io);
     allocate_result(io);
-    // EXECUTE THE REDMAT CALCULATION WITH METHOD-OF-CHOICE
-    result_ = method->calculate_reduced_density_matrix(system,bath,io,pe);
 
-    result_ = pe.collect_result(result_);
-    if (pe.is_master()) write_result(io);
+    // EXECUTE THE REDMAT CALCULATION WITH METHOD-OF-CHOICE
+
+    //result_ = method->calculate_reduced_density_matrix(system,bath,io,pe);
+
+    //result_ = pe.collect_result(result_);
+    //if (pe.is_master()) write_result(io);
 
     return;
 }
 
-void MQDS::RedMat::allocate_result(MQDS::IO & io)
+void MQDS::Absorption::allocate_result(MQDS::IO & io)
 {
     int tdim = io.nstep()/io.dump();
     result_.resize(tdim+1);
@@ -46,7 +49,7 @@ void MQDS::RedMat::allocate_result(MQDS::IO & io)
     return;
 }
 
-void MQDS::RedMat::write_result(MQDS::IO &io)
+void MQDS::Absorption::write_result(MQDS::IO &io)
 {
     std::stringstream filename;
     std::ofstream output;

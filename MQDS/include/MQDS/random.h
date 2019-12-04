@@ -19,7 +19,7 @@ namespace MQDS
 
         // Returns a double precision gaussian-distributed pseudo-random
         // number in centered about &center with variance &variance
-        double gaussian_random_number(double const &center, double const &variance);
+        double gaussian_random_number(double const &mean, double const &std_dev);
 
     };
 };

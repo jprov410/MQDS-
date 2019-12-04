@@ -102,7 +102,7 @@ void MQDS::HarmonicBilinear::read_input(const int &nbath, const int &nosc, const
         for (int ifreq=1; ifreq<j_of_omega.size(); ++ifreq)
         {
             lambda_of_omega.push_back
-                    (lambda_of_omega[ifreq-1]+ dw/MQDS::Constants::pi * j_of_omega[ifreq]/omega[ifreq]);
+                    (lambda_of_omega[ifreq-1]+ dw * j_of_omega[ifreq]/omega[ifreq]);
         }
         j_of_omega.clear();
 
@@ -136,7 +136,7 @@ void MQDS::HarmonicBilinear::read_input(const int &nbath, const int &nosc, const
     return;
 }
 
-void MQDS::HarmonicBilinear::get_initial_conditions(const double &beta)
+void MQDS::HarmonicBilinear::bare_boltzmann_wigner_initial_conditions(const double &beta)
 {
     for (int icopy=0; icopy<momentum_.size(); ++icopy)
     {
@@ -144,7 +144,7 @@ void MQDS::HarmonicBilinear::get_initial_conditions(const double &beta)
         {
             for (int iosc=0; iosc<momentum_[0][0].size(); ++iosc)
             {
-                // CALCULATE VARIANCE FROM WIGNER TRANSFORMED BOLTZMANN OPERATOR FOR SIMPLE H.O.
+                // CALCULATE STD DEV FROM WIGNER TRANSFORMED BOLTZMANN OPERATOR FOR SIMPLE H.O.
                 momentum_[icopy][ibath](iosc) =
                         std::sqrt(frequency_[ibath](iosc)/(2.0*std::tanh(0.5*beta*frequency_[ibath](iosc))));
                 position_[icopy][ibath](iosc) = momentum_[icopy][ibath](iosc) / frequency_[ibath](iosc);
@@ -153,6 +153,8 @@ void MQDS::HarmonicBilinear::get_initial_conditions(const double &beta)
                                                 * MQDS::Random::gaussian_random_number(0.0,1.0);
                 position_[icopy][ibath](iosc) = position_[icopy][ibath](iosc)
                                                 * MQDS::Random::gaussian_random_number(0.0,1.0);
+                //position_[icopy][ibath](iosc)=0.0;
+                //momentum_[icopy][ibath](iosc)=0.0;
             }
         }
     }
@@ -193,12 +195,11 @@ double MQDS::HarmonicBilinear::sb_portion_of_hamiltonian(const int &bathcopy,
                                                          const int &jstate)
 {
     double bath_part_of_sb=0.0;
-    for (int ibath=0; ibath<position()[0].size(); ++ibath)
+    for (int ibath=0; ibath<position()[bathcopy].size(); ++ibath)
     {
         for (int imode = 0; imode < position_[bathcopy][ibath].size(); ++imode)
         {
-            bath_part_of_sb = bath_part_of_sb
-                              + sys_bath_coupling_[ibath](istate,jstate) * coupling_[ibath](imode)
+            bath_part_of_sb += sys_bath_coupling_[ibath](istate,jstate) * coupling_[ibath](imode)
                                 * position_[bathcopy][ibath](imode);
 
         }
